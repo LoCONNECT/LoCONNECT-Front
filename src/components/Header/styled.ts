@@ -25,7 +25,9 @@ export const HeaderStyled = styled.div`
         max-width: 37.45px;
         width: 100%;
         display: none;
-
+        &:hover {
+          cursor: pointer;
+        }
         @media (max-width: 744px) {
           display: block;
         }
@@ -53,14 +55,49 @@ export const HeaderStyled = styled.div`
         }
         .header_logout {
           color: #6f717c;
+          font-size: 16px;
           &:hover {
             cursor: pointer;
           }
         }
       }
 
+      .header_login_container {
+        width: 150px;
+        height: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .header_login {
+          font-size: 16px;
+          cursor: pointer;
+          color: #6f717c;
+        }
+
+        .header_join {
+          font-size: 16px;
+          cursor: pointer;
+          color: #6f717c;
+        }
+
+        .header_line {
+          display: inline-block;
+          width: 1px;
+          height: 15px;
+          margin: 0px 14px;
+          background-color: rgb(217, 217, 217);
+        }
+
+        @media (max-width: 744px) {
+          display: none;
+        }
+      }
+
       .header_mobile_menu {
         display: none;
+        width: 32px;
+        height: 32px;
         cursor: pointer;
         @media (max-width: 744px) {
           display: block;
