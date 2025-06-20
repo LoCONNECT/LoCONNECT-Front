@@ -20,13 +20,13 @@ const Login = () => {
     },
   });
 
-  // 아이디
+  // 아이디 에러메시지 조건
   const showIdError =
-    (formik.touched.id || formik.submitCount > 0) && formik.errors.id;
+    (formik.values.id.length > 0 || formik.submitCount > 0) && formik.errors.id;
 
-  // 비밀번호
+  // 비밀번호 에러메시지 조건
   const showPwError =
-    (formik.touched.password || formik.submitCount > 0) &&
+    (formik.values.password.length > 0 || formik.submitCount > 0) &&
     formik.errors.password;
 
   return (
