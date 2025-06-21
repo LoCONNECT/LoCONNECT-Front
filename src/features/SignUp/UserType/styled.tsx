@@ -22,6 +22,10 @@ export const UserTypeStyle = styled.div`
 
       transition: background-color 0.3s ease, color 0.3s ease,
         border-color 0.1s ease;
+
+      @media (max-width: 318px) {
+        font-size: 11.5px;
+      }
     }
 
     .active {

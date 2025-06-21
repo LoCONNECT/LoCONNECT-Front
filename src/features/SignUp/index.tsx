@@ -29,7 +29,11 @@ const SignUp = () => {
           <div className="SignUp_header">
             <div className="SignUp_title">회원가입</div>
             <div className="SignUp_stepContainer">
-              <div className={clsx("SignUp_step", { active: step === 1 })} />
+              <div
+                className={clsx("SignUp_step", {
+                  active: step === 1 || step === 2,
+                })}
+              />
               <div className={clsx("SignUp_step", { active: step === 2 })} />
             </div>
           </div>

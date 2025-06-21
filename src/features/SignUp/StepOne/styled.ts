@@ -31,6 +31,10 @@ export const StepOneStyle = styled.div`
       font-size: 16px;
       font-weight: bold;
 
+      @media (max-width: 500px) {
+        font-size: 13px;
+      }
+
       .StepOne_agreeDiv {
         display: flex;
         align-items: center;
