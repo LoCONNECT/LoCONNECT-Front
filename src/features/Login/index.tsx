@@ -3,9 +3,14 @@ import { LoginStyled } from "./styled";
 import { useFormik } from "formik";
 import { validateLoginForm } from "@/utill/validationLoginForm";
 import { useState } from "react";
+import axios from "axios";
+import { useUserStore } from "@/store/useUserStore";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  // zustand 함수
+  const setUser = useUserStore((state) => state.setUser);
 
   // 비밀번호 보이기/숨기기
   const togglePassword = () => {
@@ -16,7 +21,19 @@ const Login = () => {
     initialValues: { id: "", password: "" },
     validate: validateLoginForm,
     onSubmit: async (values) => {
-      console.log("로그인:", values);
+      try {
+        // TODO: axiosInstance??
+        // 아이디, 비밀번호를 보내 로그인한 사용자의 id, name, role받기
+        // const res = await axios.post(
+        //   `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        //   values
+        // );
+        // const { id, name, role } = res.data;
+        // setUser({ id, name, role }); // 상태 저장
+        // console.log("로그인 성공:", { id, name, role });
+      } catch (e) {
+        console.error("로그인 실패:", e);
+      }
     },
   });
 
