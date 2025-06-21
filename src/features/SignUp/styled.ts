@@ -7,7 +7,7 @@ export const SignUpStyle = styled.div`
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    padding: 50px 10px;
+    padding: 40px 20px;
 
     .SignUp_header {
       width: 100%;

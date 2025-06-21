@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { StepOneStyle } from "./styled";
-import { useField, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { useFormField } from "@/utill/signUp/formField";
 import { handlePhoneChange } from "@/utill/signUp/phoneChange";
 import { checkDuplication } from "@/utill/signUp/checkDuplication ";
 import clsx from "clsx";
+import Image from "next/image";
 
 interface StepOneProps {
   type: "biz" | "media" | "influ";
@@ -17,6 +18,9 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [idCheckMessage, setIdCheckMessage] = useState("");
   const [phoneCheckMessage, setPhoneCheckMessage] = useState("");
+
+  const [oneAgree, setOneAgree] = useState(false);
+  const [twoAgree, setTwoAgree] = useState(false);
 
   const { setFieldValue } = useFormikContext();
   const togglePassword = () => setShowPassword((prev) => !prev);
@@ -73,7 +77,8 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
     emailField.value.trim() &&
     !isDuplicate &&
     idCheckMessage &&
-    phoneCheckMessage;
+    phoneCheckMessage &&
+    oneAgree;
 
   return (
     <StepOneStyle className="StepOne_wrap">
@@ -192,6 +197,68 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
           </div>
 
           {showEmailError && <p className="SignUp_error">{emailMeta.error}</p>}
+        </div>
+      </div>
+
+      <div className="StepOne_agree">
+        <div className="StepOne_agreeDiv">
+          <div
+            className="StepOne_icon"
+            onClick={() => {
+              if (oneAgree && twoAgree) {
+                setOneAgree(false);
+                setTwoAgree(false);
+              } else {
+                setOneAgree(true);
+                setTwoAgree(true);
+              }
+            }}
+          >
+            <Image
+              src={
+                oneAgree && twoAgree
+                  ? "/icon/checkBox_active.png"
+                  : "/icon/checkBox.png"
+              }
+              alt="checkBox"
+              fill
+            />
+          </div>
+          <p>전체동의</p>
+        </div>
+
+        <div className="StepOne_line"></div>
+
+        <div className="StepOne_agreeDiv">
+          <div
+            className="StepOne_icon"
+            onClick={() => (oneAgree ? setOneAgree(false) : setOneAgree(true))}
+          >
+            <Image
+              src={
+                oneAgree ? "/icon/checkBox_active.png" : "/icon/checkBox.png"
+              }
+              alt="checkBox"
+              fill
+            />
+          </div>
+          <p>(필수) 서비스 이용약관 동의</p>
+        </div>
+
+        <div className="StepOne_agreeDiv">
+          <div
+            className="StepOne_icon"
+            onClick={() => (twoAgree ? setTwoAgree(false) : setTwoAgree(true))}
+          >
+            <Image
+              src={
+                twoAgree ? "/icon/checkBox_active.png" : "/icon/checkBox.png"
+              }
+              alt="checkBox"
+              fill
+            />
+          </div>
+          <p>(선택) 광고성 정보 수신 동의 (SNS/MMS)</p>
         </div>
       </div>
 
