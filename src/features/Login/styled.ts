@@ -57,13 +57,16 @@ export const LoginStyled = styled.div`
             overflow: hidden;
             white-space: nowrap;
           }
-          .login_find {
+          .login_find_box {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 20px 0;
             font-size: 13px;
             color: #6f717c;
+            .login_find {
+              cursor: pointer;
+            }
             .login_line {
               display: inline-block;
               width: 1px;

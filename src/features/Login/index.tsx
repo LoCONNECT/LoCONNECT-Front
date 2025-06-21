@@ -3,11 +3,12 @@ import { LoginStyled } from "./styled";
 import { useFormik } from "formik";
 import { validateLoginForm } from "@/utill/validationLoginForm";
 import { useState } from "react";
-import axios from "axios";
 import { useUserStore } from "@/store/useUserStore";
 import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   // zustand 함수
@@ -95,10 +96,17 @@ const Login = () => {
                 <p className="login_error_message">{formik.errors.password}</p>
               )}
 
-              <div className="login_find">
-                <div>아이디 찾기</div>
+              <div className="login_find_box">
+                <div
+                  className="login_find"
+                  onClick={() => {
+                    router.push("/findid");
+                  }}
+                >
+                  아이디 찾기
+                </div>
                 <div className="login_line"></div>
-                <div>비밀번호 찾기</div>
+                <div className="login_find">비밀번호 찾기</div>
               </div>
 
               <button
@@ -119,7 +127,14 @@ const Login = () => {
             <div className="login_explain">
               아직 LoConnect의 회원이 아니신가요?
             </div>
-            <button className="login_join_btn">회원가입</button>
+            <button
+              className="login_join_btn"
+              onClick={() => {
+                router.push("/signUp");
+              }}
+            >
+              회원가입
+            </button>
           </div>
         </div>
       </div>
