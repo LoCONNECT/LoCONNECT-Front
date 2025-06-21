@@ -114,27 +114,25 @@ const FindId = () => {
         </button>
       </form>
 
-      <div className={clsx("verify_section", { visible: codeSent })}>
-        {codeSent && (
-          <>
-            <label className="verify_label" htmlFor="inputCode">
-              인증번호 입력
-            </label>
+      {codeSent && (
+        <div className="verify_box">
+          <label className="verify_label" htmlFor="inputCode">
+            인증번호 입력
+          </label>
 
-            <input
-              id="inputCode"
-              type="text"
-              className="verify_input"
-              value={inputCode}
-              onChange={(e) => setInputCode(e.target.value)}
-              placeholder="인증번호를 입력하세요"
-            />
-            <button onClick={verifyCode} className="verify_button">
-              확인
-            </button>
-          </>
-        )}
-      </div>
+          <input
+            id="inputCode"
+            type="number"
+            className="verify_input"
+            value={inputCode}
+            onChange={(e) => setInputCode(e.target.value)}
+            placeholder="인증번호를 입력하세요"
+          />
+          <button onClick={verifyCode} className="verify_button">
+            확인
+          </button>
+        </div>
+      )}
 
       {message && <p className="message">{message}</p>}
     </FindIdStyled>

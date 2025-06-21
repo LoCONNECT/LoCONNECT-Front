@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const FindIdStyled = styled.div`
   &.findid_wrap {
     width: 100vw;
-    height: 85vh;
+    height: 75vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -64,21 +64,11 @@ export const FindIdStyled = styled.div`
       }
     }
 
-    .verify_section {
-      margin-top: 44px;
-      min-height: 100px;
+    .verify_box {
+      margin-top: 40px;
       max-width: 508px;
       width: 100%;
       padding: 0 10px;
-      opacity: 0;
-      height: 0;
-      overflow: hidden;
-      transition: opacity 0.3s ease, height 0.3s ease;
-    }
-
-    .verify_section.visible {
-      opacity: 1;
-      height: auto;
     }
 
     .verify_label {
