@@ -1,7 +1,7 @@
 export const initialValues = {
   // 공통 필드
   name: "",
-  username: "",
+  id: "",
   password: "",
   phone: "",
   email: "",

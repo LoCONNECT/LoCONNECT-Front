@@ -1,6 +1,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --main-color: #1253ec;
   --gray2-color: #e9ebef;
   --gray5-color: #6f717c;
   --black-color: #131415;
@@ -46,6 +48,42 @@ a {
   margin-top: 24px;
 }
 
+.SignUp_inputDiv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.SignUp_check {
+  display: flex;
+  gap: 8px;
+}
+
+.SignUp_checkBtn {
+  width: 100px;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--gray2-color);
+  color: var(--gray5-color);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.SignUp_checkMessage {
+  font-size: 13px;
+  margin: 5px 8px 0 8px;
+  color: var(--main-color);
+}
+
+.SignUp_error {
+  font-size: 13px;
+  margin: 5px 8px 0 8px;
+  color: rgb(246, 35, 35);
+}
+
 .SignUp_input {
   width: 100%;
   height: 52px;
@@ -58,14 +96,16 @@ a {
   letter-spacing: 0.07em;
 }
 
-.SignUp_input:active,
-.SignUp_input:focus {
+input:active,
+input:focus,
+button:active,
+button:focus {
   outline: none;
 }
 
 input::placeholder {
   color: #999ba5;
-  font-weight: bold;
+  font-weight: 500;
   letter-spacing: 0em;
 }
 
@@ -81,6 +121,15 @@ input::placeholder {
   font-weight: bold;
   font-size: 13px;
   margin: 24px 0;
+}
+
+.SignStep_btn:disabled {
+  cursor: default;
+}
+
+.SignStep_activeBtn {
+  background-color: var(--main-color);
+  color: white;
 }
 
 @media (prefers-color-scheme: dark) {
