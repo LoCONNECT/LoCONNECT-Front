@@ -4,10 +4,28 @@ export const validationSchema = (type: "biz" | "media" | "influ") =>
   Yup.object().shape({
     // 공통
     name: Yup.string().required("이름은 필수입니다."),
-    username: Yup.string().required("아이디는 필수입니다."),
-    password: Yup.string().required("비밀번호는 필수입니다."),
-    phone: Yup.string().required("전화번호는 필수입니다."),
-    email: Yup.string().email("이메일 형식").required("이메일은 필수입니다."),
+    id: Yup.string()
+      .required("아이디는 필수입니다.")
+      .matches(
+        /^[a-zA-Z0-9]{4,12}$/,
+        "아이디는 4~12자의 영문 또는 숫자여야 합니다."
+      ),
+    password: Yup.string()
+      .required("비밀번호는 필수입니다.")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[A-Za-z\d!@#$%^&*()_\-+=]{8,}$/,
+        "비밀번호는 8자 이상이며, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다."
+      ),
+    phone: Yup.string()
+      .required("전화번호는 필수입니다.")
+      .test(
+        "len",
+        "전화번호는 숫자 11자여야 합니다.",
+        (val) => val?.replace(/-/g, "").length === 11
+      ),
+    email: Yup.string()
+      .email("이메일 형식으로 작성해주세요.")
+      .required("이메일은 필수입니다."),
     agreeRequired: Yup.boolean().oneOf([true], "필수 동의가 필요합니다."),
 
     ...(type === "biz" && {

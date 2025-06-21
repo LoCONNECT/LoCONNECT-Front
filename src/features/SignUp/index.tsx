@@ -41,12 +41,7 @@ const SignUp = () => {
                   <p className="SignUp_font">회원유형</p>
                   <UserType type={type} setType={setType} />
                 </div>
-                <StepOne
-                  type={type}
-                  step={step}
-                  setStep={setStep}
-                  onNext={() => setStep(2)}
-                />
+                <StepOne type={type} onNext={() => setStep(2)} />
               </div>
             )}
 
