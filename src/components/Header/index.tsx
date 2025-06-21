@@ -7,10 +7,18 @@ import MenuIcon from "@/assets/images/Menu.svg";
 import MobileLogo from "@/assets/images/MobileLogo.svg";
 import clsx from "clsx";
 import { useRouter } from "next/router";
+import { useUserStore } from "@/store/useUserStore";
 
 const Header = () => {
   const router = useRouter();
-  const user = 1; // 임시
+  const user = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
+
+  // 로그아웃 클릭시
+  const handleLogout = () => {
+    logout(); // user 상태 null로 초기화
+    router.push("/login"); // 로그인 페이지로 이동
+  };
 
   return (
     <HeaderStyled className={clsx("header_wrap")}>
@@ -35,7 +43,7 @@ const Header = () => {
         />
 
         {/* PC 메뉴 */}
-        {user !== 1 ? (
+        {user ? (
           // 로그인 한 경우
           <div className="header_menu_box">
             <div className="header_icon_box">
@@ -46,7 +54,9 @@ const Header = () => {
               <Image className="header_icon" src={AlarmIcon} alt="알림" />
             </div>
             {/* 로그아웃 */}
-            <div className="header_logout">로그아웃</div>
+            <div className="header_logout" onClick={handleLogout}>
+              로그아웃
+            </div>
           </div>
         ) : (
           // 로그인 안 한 경우
