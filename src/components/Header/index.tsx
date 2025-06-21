@@ -54,7 +54,7 @@ const Header = () => {
             <span
               className="header_join"
               onClick={() => {
-                // router.push("/join");
+                router.push("/signUp");
               }}
             >
               회원가입
