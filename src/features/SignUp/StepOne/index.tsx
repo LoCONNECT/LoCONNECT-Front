@@ -5,7 +5,10 @@ import { useFormField } from "@/utill/signUp/formField";
 import { handlePhoneChange } from "@/utill/signUp/phoneChange";
 import { checkDuplication } from "@/utill/signUp/checkDuplication ";
 import clsx from "clsx";
-import Image from "next/image";
+import Agree from "./Agree";
+import Email from "./Email";
+import Duplicate from "./Duplicate";
+import { handleIdChange } from "@/utill/signUp/idChange";
 
 interface StepOneProps {
   type: "biz" | "media" | "influ";
@@ -96,36 +99,18 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         </div>
       </div>
 
-      <div className="StepOne_userInfo">
-        <p className="SignUp_font">아이디</p>
-
-        <div className="SignUp_inputDiv">
-          <div className="SignUp_check">
-            <input
-              className="SignUp_input"
-              type="text"
-              placeholder="아이디를 입력해주세요."
-              {...idField}
-            />
-
-            <button className="SignUp_checkBtn" onClick={handleCheckId}>
-              중복 확인
-            </button>
-          </div>
-
-          {showIdError && <p className="SignUp_error">{idMeta.error}</p>}
-          {!showIdError && idCheckMessage && (
-            <p
-              className={clsx({
-                SignUp_checkMessage: !isDuplicate,
-                SignUp_error: isDuplicate,
-              })}
-            >
-              {idCheckMessage}
-            </p>
-          )}
-        </div>
-      </div>
+      <Duplicate
+        type="아이디"
+        placeholder="아이디를 입력해주세요."
+        handleChange={handleIdChange}
+        setFieldValue={setFieldValue}
+        field={idField}
+        handleCheck={handleCheckId}
+        showError={!!showIdError}
+        meta={idMeta}
+        checkMessage={idCheckMessage}
+        isDuplicate={isDuplicate}
+      />
 
       <div className="StepOne_userInfo">
         <p className="SignUp_font">비밀번호</p>
@@ -144,123 +129,32 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         </div>
       </div>
 
-      <div className="StepOne_userInfo">
-        <p className="SignUp_font">전화번호</p>
+      <Duplicate
+        type="전화번호"
+        placeholder="예) 01012345678"
+        field={phoneField}
+        handleChange={handlePhoneChange}
+        setFieldValue={setFieldValue}
+        handleCheck={handleCheckPhone}
+        showError={!!showPhoneError}
+        meta={phoneMeta}
+        checkMessage={phoneCheckMessage}
+        isDuplicate={isDuplicate}
+      />
 
-        <div className="SignUp_inputDiv">
-          <div className="SignUp_check">
-            <input
-              className="SignUp_input"
-              type="text"
-              placeholder="예) 01012345678"
-              {...phoneField}
-              onChange={(e) => handlePhoneChange(e, setFieldValue)}
-              maxLength={13}
-            />
+      <Email
+        type={type}
+        emailField={emailField}
+        emailMeta={emailMeta}
+        showEmailError={!!showEmailError}
+      />
 
-            <button className="SignUp_checkBtn" onClick={handleCheckPhone}>
-              중복 확인
-            </button>
-          </div>
-
-          {showPhoneError && <p className="SignUp_error">{phoneMeta.error}</p>}
-          {!showPhoneError && phoneCheckMessage && (
-            <p
-              className={clsx({
-                SignUp_checkMessage: !isDuplicate,
-                SignUp_error: isDuplicate,
-              })}
-            >
-              {phoneCheckMessage}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div className="StepOne_userInfo">
-        <p className="SignUp_font">
-          {type === "media" ? "회사 이메일" : "이메일"}
-        </p>
-
-        <div className="SignUp_inputDiv">
-          <div className="SignUp_check">
-            <input
-              className="SignUp_input"
-              type="email"
-              placeholder="이메일을 입력해주세요."
-              {...emailField}
-            />
-
-            <button className="SignUp_checkBtn" onClick={handleCheckPhone}>
-              이메일 인증
-            </button>
-          </div>
-
-          {showEmailError && <p className="SignUp_error">{emailMeta.error}</p>}
-        </div>
-      </div>
-
-      <div className="StepOne_agree">
-        <div className="StepOne_agreeDiv">
-          <div
-            className="StepOne_icon"
-            onClick={() => {
-              if (oneAgree && twoAgree) {
-                setOneAgree(false);
-                setTwoAgree(false);
-              } else {
-                setOneAgree(true);
-                setTwoAgree(true);
-              }
-            }}
-          >
-            <Image
-              src={
-                oneAgree && twoAgree
-                  ? "/icon/checkBox_active.png"
-                  : "/icon/checkBox.png"
-              }
-              alt="checkBox"
-              fill
-            />
-          </div>
-          <p>전체동의</p>
-        </div>
-
-        <div className="StepOne_line"></div>
-
-        <div className="StepOne_agreeDiv">
-          <div
-            className="StepOne_icon"
-            onClick={() => (oneAgree ? setOneAgree(false) : setOneAgree(true))}
-          >
-            <Image
-              src={
-                oneAgree ? "/icon/checkBox_active.png" : "/icon/checkBox.png"
-              }
-              alt="checkBox"
-              fill
-            />
-          </div>
-          <p>(필수) 서비스 이용약관 동의</p>
-        </div>
-
-        <div className="StepOne_agreeDiv">
-          <div
-            className="StepOne_icon"
-            onClick={() => (twoAgree ? setTwoAgree(false) : setTwoAgree(true))}
-          >
-            <Image
-              src={
-                twoAgree ? "/icon/checkBox_active.png" : "/icon/checkBox.png"
-              }
-              alt="checkBox"
-              fill
-            />
-          </div>
-          <p>(선택) 광고성 정보 수신 동의 (SNS/MMS)</p>
-        </div>
-      </div>
+      <Agree
+        oneAgree={oneAgree}
+        twoAgree={twoAgree}
+        setOneAgree={setOneAgree}
+        setTwoAgree={setTwoAgree}
+      />
 
       <button
         className={clsx("SignStep_btn", { SignStep_activeBtn: isFormValid })}
