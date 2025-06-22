@@ -24,10 +24,10 @@ const Login = () => {
     validate: validateLoginForm,
     onSubmit: async (values) => {
       try {
-        // TODO: 로그인 요청(아이디랑 비밀번호 보냄)
+        // TODO: 로그인 요청(아이디랑 비밀번호 이런식으로 보냄 -> {id: '아이디', password: '비밀번호'})
         await axiosInstance.post("/auth/login", values);
 
-        // TODO: 유저 정보 요청(해당 유저의 id, name, 회원유형(role) 보내주기)
+        // TODO: 유저 정보 요청(해당 유저의 정보 보내주기 -> 회원가입 다 하면 필요한거 요청할거니까 아직 하지말기)
         const res = await axiosInstance.get("/auth/user");
 
         // Zustand store에 유저 정보 저장
