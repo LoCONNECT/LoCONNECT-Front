@@ -8,7 +8,7 @@ interface StepTwoProps {
 
 const StepOne = ({ type, onPrev }: StepTwoProps) => {
   return (
-    <StepTwoStyle className="StepOne_wrap">
+    <StepTwoStyle className="StepTwo_wrap">
       {type === "biz" ? (
         <BizInfo />
       ) : type === "media" ? (
@@ -16,9 +16,15 @@ const StepOne = ({ type, onPrev }: StepTwoProps) => {
       ) : (
         <></>
       )}
-      <button className="SignStep_btn" onClick={onPrev}>
-        이전
-      </button>
+
+      <div className="SignStep_btns">
+        <button className="SignStep_btn" onClick={onPrev}>
+          이전
+        </button>
+        <button type="submit" className="SignUp_submitBtn">
+          회원가입
+        </button>
+      </div>
     </StepTwoStyle>
   );
 };
