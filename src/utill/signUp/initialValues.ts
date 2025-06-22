@@ -28,7 +28,7 @@ export const initialValues = {
   representativeName: "",
   influLicense: null,
   influDepartment: "",
-  influType: "", // 개인 or 단체
+  influType: "individual", // 개인 or 단체
   influPurpose: "",
   promoUrl: "",
 };

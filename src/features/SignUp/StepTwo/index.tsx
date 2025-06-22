@@ -2,6 +2,8 @@ import clsx from "clsx";
 import BizInfo from "./BizInfo";
 import { StepTwoStyle } from "./styled";
 import { useFormikContext } from "formik";
+import MediaInfo from "./MediaInfo";
+import InfluInfo from "./influInfo";
 
 interface StepTwoProps {
   type: "biz" | "media" | "influ";
@@ -63,9 +65,9 @@ const StepTwo = ({ type, onPrev }: StepTwoProps) => {
       {type === "biz" ? (
         <BizInfo />
       ) : type === "media" ? (
-        <div>media</div>
+        <MediaInfo />
       ) : (
-        <></>
+        <InfluInfo />
       )}
 
       <div className="SignStep_btns">
