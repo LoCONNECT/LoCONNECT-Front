@@ -22,10 +22,7 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
   const [idCheckMessage, setIdCheckMessage] = useState("");
   const [phoneCheckMessage, setPhoneCheckMessage] = useState("");
 
-  const [oneAgree, setOneAgree] = useState(false);
-  const [twoAgree, setTwoAgree] = useState(false);
-
-  const { setFieldValue } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<any>();
   const togglePassword = () => setShowPassword((prev) => !prev);
 
   const {
@@ -81,7 +78,7 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
     !isDuplicate &&
     idCheckMessage &&
     phoneCheckMessage &&
-    oneAgree;
+    values.agreeRequired;
 
   return (
     <StepOneStyle className="StepOne_wrap">
@@ -150,13 +147,14 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
       />
 
       <Agree
-        oneAgree={oneAgree}
-        twoAgree={twoAgree}
-        setOneAgree={setOneAgree}
-        setTwoAgree={setTwoAgree}
+        oneAgree={values.agreeRequired}
+        twoAgree={values.agreeOptional}
+        setOneAgree={(val) => setFieldValue("agreeRequired", val)}
+        setTwoAgree={(val) => setFieldValue("agreeOptional", val)}
       />
 
       <button
+        type="button"
         className={clsx("SignStep_btn", { SignStep_activeBtn: isFormValid })}
         onClick={onNext}
         // disabled={!isFormValid}

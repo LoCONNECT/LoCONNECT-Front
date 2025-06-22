@@ -4,7 +4,12 @@ import { ServerStyleSheet } from "styled-components";
 const Document = () => {
   return (
     <Html lang="en">
-      <Head></Head>
+      <Head>
+        <script
+          src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+          defer
+        ></script>
+      </Head>
       <body>
         <Main />
         <NextScript />

@@ -44,10 +44,7 @@ const Agree = ({
       <div className="StepOne_line"></div>
 
       <div className="StepOne_agreeDiv">
-        <div
-          className="StepOne_icon"
-          onClick={() => (oneAgree ? setOneAgree(false) : setOneAgree(true))}
-        >
+        <div className="StepOne_icon" onClick={() => setOneAgree(!oneAgree)}>
           <Image
             src={oneAgree ? "/icon/checkBox_active.png" : "/icon/checkBox.png"}
             alt="checkBox"
@@ -58,10 +55,7 @@ const Agree = ({
       </div>
 
       <div className="StepOne_agreeDiv">
-        <div
-          className="StepOne_icon"
-          onClick={() => (twoAgree ? setTwoAgree(false) : setTwoAgree(true))}
-        >
+        <div className="StepOne_icon" onClick={() => setTwoAgree(!twoAgree)}>
           <Image
             src={twoAgree ? "/icon/checkBox_active.png" : "/icon/checkBox.png"}
             alt="checkBox"

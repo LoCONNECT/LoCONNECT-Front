@@ -1,6 +1,7 @@
 export const handlePhoneChange = (
   e: React.ChangeEvent<HTMLInputElement>,
-  setFieldValue: (field: string, value: any) => void
+  setFieldValue: (field: string, value: any) => void,
+  fieldName: string
 ) => {
   let value = e.target.value;
   value = value.replace(/\D/g, "");
@@ -13,5 +14,5 @@ export const handlePhoneChange = (
     value = value.replace(/(\d{3})(\d{4})(\d+)/, "$1-$2-$3");
   }
 
-  setFieldValue("phone", value);
+  setFieldValue(fieldName, value);
 };

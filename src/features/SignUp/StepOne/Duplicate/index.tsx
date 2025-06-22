@@ -8,7 +8,8 @@ interface DuplicateProps {
   field: FieldInputProps<any>;
   handleChange: (
     e: ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void
+    setFieldValue: (field: string, value: any) => void,
+    fieldName: string
   ) => void;
   setFieldValue: (field: string, value: any) => void;
   handleCheck: () => void;
@@ -43,7 +44,7 @@ const Duplicate = ({
             type="text"
             placeholder={placeholder}
             {...field}
-            onChange={(e) => handleChange(e, setFieldValue)}
+            onChange={(e) => handleChange(e, setFieldValue, field.name)}
             {...(type === "전화번호" ? { maxLength: 13 } : {})}
           />
 

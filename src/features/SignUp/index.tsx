@@ -18,8 +18,53 @@ const SignUp = () => {
       initialValues={initialValues}
       validationSchema={validationSchema(type)}
       onSubmit={(values) => {
-        console.log("제출 데이터", values);
-        // axios.post(`${process.env.NEXT_PUBLIC_API_URL/auth`, values);
+        const commonFields = {
+          name: values.name,
+          id: values.id,
+          password: values.password,
+          phone: values.phone,
+          email: values.email,
+          agreeRequired: values.agreeRequired,
+          agreeOptional: values.agreeOptional,
+        };
+
+        let typeFields = {};
+
+        if (type === "biz") {
+          typeFields = {
+            bizName: values.bizName,
+            bizLicense: values.bizLicense,
+            bizCategory: values.bizCategory,
+            bizPostcode: values.bizPostcode,
+            bizAddress: values.bizAddress,
+            bizPhone: values.bizPhone,
+          };
+        } else if (type === "media") {
+          typeFields = {
+            companyName: values.companyName,
+            programName: values.programName,
+            proofFile: values.proofFile,
+            department: values.department,
+            purpose: values.purpose,
+          };
+        } else if (type === "influ") {
+          typeFields = {
+            representativeName: values.representativeName,
+            influLicense: values.influLicense,
+            influDepartment: values.influDepartment,
+            influType: values.influType,
+            influPurpose: values.influPurpose,
+            promoUrl: values.promoUrl,
+          };
+        }
+
+        const submitData = {
+          ...commonFields,
+          ...typeFields,
+        };
+
+        console.log("제출 데이터", submitData);
+        // axios.post(`${process.env.NEXT_PUBLIC_API_URL/auth`, submitData);
       }}
       // type 바뀔 때 유효성 스키마 재적용
       enableReinitialize

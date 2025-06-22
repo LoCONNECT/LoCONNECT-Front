@@ -12,3 +12,9 @@ declare module "styled-components" {
     };
   }
 }
+
+declare global {
+  export interface Window {
+    daum: any;
+  }
+}
