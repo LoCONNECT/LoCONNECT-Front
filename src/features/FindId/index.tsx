@@ -31,12 +31,12 @@ const FindId = () => {
     onSubmit: async (values) => {
       setMessage("");
       try {
-        // TODO: 이름, 이메일 보내주면 회원정보 확인하여 있으면 해당 이메일로 인증번호 보내주기
+        // TODO: 이름, 이메일({name: '이름', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 인증번호 보내주기
         await axiosInstance.post("/auth/send-code", values);
         setCodeSent(true);
         setMessage("인증번호가 이메일로 발송되었습니다.");
       } catch (e) {
-        // NotFoundException 회원정보가 없다는 거 던져주기
+        // TODO: NotFoundException 회원정보가 없다는 거 던져주기
         if (isAxiosError(e) && e.response?.status === 404) {
           setMessage("입력하신 정보와 일치하는 회원이 없습니다.");
         } else {
@@ -51,14 +51,14 @@ const FindId = () => {
     try {
       // TODO: 이름, 이메일, 사용자가 입력한 입력코드 보내주면 해당 사용자의 아이디 보내주기
       const res = await axiosInstance.post("/auth/check-code", {
-        name: formik.values.name,
-        email: formik.values.email,
-        code: inputCode,
+        name: formik.values.name, // 이름
+        email: formik.values.email, // 이메일
+        code: inputCode, // 사용자가 입력한 인증코드
       });
-      setUserId(res.data.userId);
-      setMessage(`당신의 아이디는 ${res.data.userId}입니다.`);
+      setUserId(res.data);
+      setMessage(`당신의 아이디는 ${res.data}입니다.`);
     } catch (e) {
-      // BadRequestException 인증번호 일치하지 않는다는 거 던져주기
+      // TODO: BadRequestException 인증번호 일치하지 않는다는 거 던져주기
       if (isAxiosError(e) && e.response?.status === 400) {
         setMessage("인증번호가 일치하지 않습니다.");
       } else {
