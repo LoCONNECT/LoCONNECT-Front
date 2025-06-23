@@ -64,7 +64,7 @@ const SignUp = () => {
         };
 
         console.log("제출 데이터", submitData);
-        // axios.post(`${process.env.NEXT_PUBLIC_API_URL/auth`, submitData);
+        // axios.post(`${process.env.NEXT_PUBLIC_API_URL/auth/${type}`, submitData)
       }}
       // type 바뀔 때 유효성 스키마 재적용
       enableReinitialize

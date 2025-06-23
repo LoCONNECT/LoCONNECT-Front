@@ -9,6 +9,7 @@ import Agree from "./Agree";
 import Email from "./Email";
 import Duplicate from "./Duplicate";
 import { handleIdChange } from "@/utill/signUp/idChange";
+import DefaultInput from "@/components/SignUp/DefaultInput";
 
 interface StepOneProps {
   type: "biz" | "media" | "influ";
@@ -82,19 +83,13 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
 
   return (
     <StepOneStyle className="StepOne_wrap">
-      <div className="StepOne_userInfo">
-        <p className="SignUp_font">이름</p>
-
-        <div className="SignUp_inputDiv">
-          <input
-            className="SignUp_input"
-            type="text"
-            placeholder="이름을 작성해주세요."
-            {...nameField}
-          />
-          {showNameError && <p className="SignUp_error">{nameMeta.error}</p>}
-        </div>
-      </div>
+      <DefaultInput
+        type="이름"
+        placeholder="이름을 입력해주세요."
+        field={nameField}
+        showError={!!showNameError}
+        meta={nameMeta}
+      />
 
       <Duplicate
         type="아이디"
