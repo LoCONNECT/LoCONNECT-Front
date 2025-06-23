@@ -37,7 +37,7 @@ const FindPw = () => {
     }),
     onSubmit: async (values) => {
       try {
-        // TODO: 이름, 이메일({id: '아이디', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 임시 비밀번호 발송 요청
+        // TODO: 아이디, 이메일({id: '아이디', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 임시 비밀번호 발송 요청
         await axiosInstance.post("/auth/send-password", values);
 
         alert("임시 비밀번호가 이메일로 발송되었습니다.");
