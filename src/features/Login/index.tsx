@@ -103,7 +103,14 @@ const Login = () => {
                   아이디 찾기
                 </div>
                 <div className="login_line"></div>
-                <div className="login_find">비밀번호 찾기</div>
+                <div
+                  className="login_find"
+                  onClick={() => {
+                    router.push("/findpw");
+                  }}
+                >
+                  비밀번호 찾기
+                </div>
               </div>
 
               <button
