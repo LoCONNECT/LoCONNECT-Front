@@ -27,14 +27,11 @@ const Login = () => {
         // TODO: 로그인 요청(아이디랑 비밀번호 이런식으로 보냄 -> {id: '아이디', password: '비밀번호'})
         await axiosInstance.post("/auth/login", values);
 
-        // TODO: 유저 정보 요청(해당 유저의 정보 보내주기 -> 회원가입 다 하면 필요한거 요청할거니까 아직 하지말기)
+        // TODO: 유저 정보 요청(해당 유저의 정보 보내주기 -> 회원가입때 보내주는 유저 정보 똑같이 보내주기)
         const res = await axiosInstance.get("/auth/user");
 
         // Zustand store에 유저 정보 저장
-        const { id, name, role } = res.data;
-        setUser({ id, name, role });
-
-        console.log("로그인 및 유저정보 가져오기 성공:", { id, name, role });
+        setUser(res.data);
       } catch (e) {
         console.error("로그인 실패:", e);
       }
