@@ -9,6 +9,8 @@ import { initialValues } from "@/utill/signUp/initialValues";
 import { validationSchema } from "@/utill/signUp/validationSchema";
 import axios from "axios";
 import { useUserStore } from "@/store/useUserStore";
+import { useRouter } from "next/router";
+import axiosInstance from "@/lib/axios";
 
 const SignUp = () => {
   const [step, setStep] = useState<1 | 2>(1);
@@ -18,6 +20,8 @@ const SignUp = () => {
   const isFile = (value: any): value is File => {
     return value instanceof File;
   };
+
+  const router = useRouter();
 
   return (
     <Formik
@@ -80,23 +84,26 @@ const SignUp = () => {
           }
         });
 
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/${type}`,
-          formData,
-          {
+        for (const [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
+
+        try {
+          const res = await axiosInstance.post(`/auth/${type}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }
-        );
-        console.log("유저 모든 정보 : ", res.data);
+          });
 
-        // const userData = res.data.user;
+          console.log("유저 모든 정보 : ", res.data);
 
-        // useUserStore.getState().setUser(userData);
+          // 상태 저장
+          // useUserStore.getState().setUser(res.data.user);
 
-        for (const [key, value] of formData.entries()) {
-          console.log(key, value);
+          // router.push("/");
+        } catch (e) {
+          console.error("회원가입 실패:", e);
+          // 실패 메시지 띄우기 등 추가 처리 가능
         }
       }}
       // type 바뀔 때 유효성 스키마 재적용
