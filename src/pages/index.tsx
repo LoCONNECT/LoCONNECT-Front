@@ -1,6 +1,7 @@
-import MainPage from "@/features/MainPage";
+import IntroPage from "@/features/IntroPage";
 
 const Home = () => {
-  return <MainPage />;
+  return <IntroPage />;
 };
+
 export default Home;
