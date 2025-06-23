@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
+import { validateId } from "@/utill/validationId";
 
 function isAxiosError(error: unknown): error is AxiosError {
   return typeof error === "object" && error !== null && "isAxiosError" in error;
@@ -23,7 +24,13 @@ const FindPw = () => {
       email: "",
     },
     validationSchema: Yup.object({
-      id: Yup.string().required("아이디를 입력해주세요."),
+      id: Yup.string()
+        .required("아이디를 입력해주세요.")
+        .test("is-valid-id", (value, ctx) => {
+          const error = validateId(value ?? "");
+          // yup의 test는 true/false 또는 error 메시지 반환
+          return error ? ctx.createError({ message: error }) : true;
+        }),
       email: Yup.string()
         .email("이메일 형식이 올바르지 않습니다.")
         .required("이메일을 입력해주세요."),
@@ -31,11 +38,13 @@ const FindPw = () => {
     onSubmit: async (values) => {
       try {
         // TODO: 이름, 이메일({id: '아이디', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 임시 비밀번호 발송 요청
-        await axiosInstance.post("/auth/reset-password", values);
+        await axiosInstance.post("/auth/send-password", values);
 
         alert("임시 비밀번호가 이메일로 발송되었습니다.");
+
         router.push("/login"); // 로그인 페이지로 이동
       } catch (e) {
+        // TODO: NotFoundException 회원정보가 없다는 거 던져주기
         if (isAxiosError(e) && e.response?.status === 404) {
           setMessage("입력하신 정보와 일치하는 회원이 없습니다.");
         } else {
