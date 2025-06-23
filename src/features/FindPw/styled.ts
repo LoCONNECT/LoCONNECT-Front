@@ -64,46 +64,6 @@ export const FindPwStyled = styled.div`
       }
     }
 
-    .verify_box {
-      margin-top: 40px;
-      max-width: 508px;
-      width: 100%;
-      padding: 0 10px;
-    }
-
-    .verify_label {
-      display: block;
-      font-size: 18px;
-      font-weight: 500;
-      margin-bottom: 10px;
-      width: 100%;
-    }
-    .verify_input {
-      width: 100%;
-      height: 52px;
-      border: 1px solid #e9ebef;
-      border-radius: 12px;
-      font-size: 15px;
-      padding: 17px 15px;
-    }
-    .verify_button {
-      width: 100%;
-      height: 52px;
-      border-radius: 12px;
-      border: 1px solid #1253ec;
-      background-color: #1253ec;
-      color: white;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
-
-      &:hover {
-        background-color: #0e44c6;
-      }
-    }
-
     .message {
       margin-top: 20px;
       font-size: 14px;
