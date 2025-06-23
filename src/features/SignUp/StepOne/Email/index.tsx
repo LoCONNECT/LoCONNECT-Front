@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FieldInputProps, FieldMetaProps } from "formik";
 import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
+import clsx from "clsx";
 
 interface EmailProps {
   type: "media" | "biz" | "influ";
@@ -18,24 +19,35 @@ const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
   const [codeSent, setCodeSent] = useState(false);
   const [inputCode, setInputCode] = useState("");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(
+    null
+  );
   const [isVerified, setIsVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isFormValid = emailField.value.trim() && !showEmailError;
 
   const handleSendCode = async () => {
     setMessage("");
+    setIsLoading(true);
+
     try {
       await axiosInstance.post("/auth/send-code", {
         email: emailField.value,
       });
       setCodeSent(true);
       setMessage("인증번호가 이메일로 발송되었습니다.");
+      setMessageType("success");
     } catch (e) {
       if (isAxiosError(e) && e.response?.status === 404) {
         setMessage("등록되지 않은 이메일입니다.");
+        setMessageType("error");
       } else {
         setMessage("인증번호 발송에 실패했습니다.");
+        setMessageType("error");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,11 +59,14 @@ const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
       });
       setIsVerified(true);
       setMessage("이메일 인증이 완료되었습니다.");
+      setMessageType("success");
     } catch (e) {
       if (isAxiosError(e) && e.response?.status === 400) {
         setMessage("인증번호가 일치하지 않습니다.");
+        setMessageType("error");
       } else {
         setMessage("오류가 발생했습니다. 다시 시도해주세요.");
+        setMessageType("error");
       }
     }
   };
@@ -74,10 +89,10 @@ const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
           <button
             type="button"
             className="SignUp_checkBtn"
-            disabled={!isFormValid || isVerified}
+            disabled={!isFormValid || isVerified || isLoading}
             onClick={handleSendCode}
           >
-            이메일 인증
+            {isLoading ? "전송 중..." : "이메일 인증"}
           </button>
         </div>
 
@@ -99,15 +114,25 @@ const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
           />
           <button
             type="button"
-            className="verify_button"
+            className="SignUp_checkBtn"
             onClick={handleVerifyCode}
+            disabled={!inputCode}
           >
             확인
           </button>
         </div>
       )}
 
-      {message && <p className="SignUp_message">{message}</p>}
+      {message && (
+        <p
+          className={clsx(
+            messageType === "error" && "SignUp_error",
+            messageType === "success" && "SignUp_success"
+          )}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 };

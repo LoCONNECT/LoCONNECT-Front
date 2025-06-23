@@ -7,17 +7,23 @@ import StepTwo from "./StepTwo";
 import { Form, Formik } from "formik";
 import { initialValues } from "@/utill/signUp/initialValues";
 import { validationSchema } from "@/utill/signUp/validationSchema";
+import axios from "axios";
+import { useUserStore } from "@/store/useUserStore";
 
 const SignUp = () => {
   const [step, setStep] = useState<1 | 2>(1);
   // 소상공인 : biz, 방송국 : media, 인플루언서 : influ
   const [type, setType] = useState<"biz" | "media" | "influ">("biz");
 
+  const isFile = (value: any): value is File => {
+    return value instanceof File;
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema(type)}
-      onSubmit={(values) => {
+      onSubmit={async (values) => {
         const commonFields = {
           name: values.name,
           id: values.id,
@@ -37,6 +43,7 @@ const SignUp = () => {
             bizCategory: values.bizCategory,
             bizPostcode: values.bizPostcode,
             bizAddress: values.bizAddress,
+            bizAddressDetail: values.bizAddressDetail,
             bizPhone: values.bizPhone,
           };
         } else if (type === "media") {
@@ -63,8 +70,34 @@ const SignUp = () => {
           ...typeFields,
         };
 
-        console.log("제출 데이터", submitData);
-        // axios.post(`${process.env.NEXT_PUBLIC_API_URL/auth/${type}`, submitData)
+        const formData = new FormData();
+
+        Object.entries(submitData).forEach(([key, value]) => {
+          if (isFile(value)) {
+            formData.append(key, value);
+          } else {
+            formData.append(key, String(value));
+          }
+        });
+
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/${type}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("유저 모든 정보 : ", res.data);
+
+        // const userData = res.data.user;
+
+        // useUserStore.getState().setUser(userData);
+
+        for (const [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
       }}
       // type 바뀔 때 유효성 스키마 재적용
       enableReinitialize
