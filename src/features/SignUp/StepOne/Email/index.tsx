@@ -9,20 +9,29 @@ interface EmailProps {
   emailField: FieldInputProps<string>;
   emailMeta: FieldMetaProps<string>;
   showEmailError: boolean;
+  isVerified: boolean;
+  setIsVerified: (val: boolean) => void;
 }
 
 function isAxiosError(error: unknown): error is AxiosError {
   return typeof error === "object" && error !== null && "isAxiosError" in error;
 }
 
-const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
+const Email = ({
+  type,
+  emailField,
+  emailMeta,
+  showEmailError,
+  isVerified,
+  setIsVerified,
+}: EmailProps) => {
   const [codeSent, setCodeSent] = useState(false);
   const [inputCode, setInputCode] = useState("");
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error" | null>(
     null
   );
-  const [isVerified, setIsVerified] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const isFormValid = emailField.value.trim() && !showEmailError;

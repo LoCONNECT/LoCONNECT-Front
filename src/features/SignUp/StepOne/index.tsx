@@ -23,6 +23,8 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
   const [idCheckMessage, setIdCheckMessage] = useState("");
   const [phoneCheckMessage, setPhoneCheckMessage] = useState("");
 
+  const [isVerified, setIsVerified] = useState(false);
+
   const { values, setFieldValue } = useFormikContext<any>();
   const togglePassword = () => setShowPassword((prev) => !prev);
 
@@ -87,7 +89,8 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
     idCheckMessage &&
     phoneCheckMessage &&
     !showConfirmPwError &&
-    values.agreeRequired;
+    values.agreeRequired &&
+    isVerified;
 
   return (
     <StepOneStyle className="StepOne_wrap">
@@ -167,6 +170,8 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         emailField={emailField}
         emailMeta={emailMeta}
         showEmailError={!!showEmailError}
+        isVerified={isVerified}
+        setIsVerified={setIsVerified}
       />
 
       <Agree
