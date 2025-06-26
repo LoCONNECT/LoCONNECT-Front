@@ -185,7 +185,7 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         type="button"
         className={clsx("SignStep_btn", { SignStep_activeBtn: isFormValid })}
         onClick={onNext}
-        // disabled={!isFormValid}
+        disabled={!isFormValid}
       >
         다음
       </button>
