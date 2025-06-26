@@ -3,10 +3,16 @@ export const initialValues = {
   name: "",
   id: "",
   password: "",
+  confirmPassword: "",
   phone: "",
   email: "",
   agreeRequired: false,
   agreeOptional: false,
+  idCheckMessage: "",
+  isIdDuplicate: false,
+  phoneCheckMessage: "",
+  isPhoneDuplicate: false,
+  isEmailVerified: false,
 
   // 소상공인 (biz)
   bizName: "",

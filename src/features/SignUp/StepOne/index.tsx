@@ -19,12 +19,6 @@ interface StepOneProps {
 const StepOne = ({ type, onNext }: StepOneProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const [isDuplicate, setIsDuplicate] = useState(false);
-  const [idCheckMessage, setIdCheckMessage] = useState("");
-  const [phoneCheckMessage, setPhoneCheckMessage] = useState("");
-
-  const [isVerified, setIsVerified] = useState(false);
-
   const { values, setFieldValue } = useFormikContext<any>();
   const togglePassword = () => setShowPassword((prev) => !prev);
 
@@ -66,16 +60,15 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
 
   const handleCheckId = async () => {
     const res = await checkDuplication("id", idField.value);
-    setIdCheckMessage(res.message);
-    setIsDuplicate(res.isDuplicate);
+    setFieldValue("idCheckMessage", res.message);
+    setFieldValue("isIdDuplicate", res.isDuplicate);
   };
 
   const handleCheckPhone = async () => {
-    // 하이픈 제거
     const rawPhone = phoneField.value.replace(/\D/g, "");
     const res = await checkDuplication("phone", rawPhone);
-    setPhoneCheckMessage(res.message);
-    setIsDuplicate(res.isDuplicate);
+    setFieldValue("phoneCheckMessage", res.message);
+    setFieldValue("isPhoneDuplicate", res.isDuplicate);
   };
 
   const isFormValid =
@@ -85,12 +78,12 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
     (confirmPasswordField.value || "").trim() &&
     (phoneField.value || "").trim() &&
     (emailField.value || "").trim() &&
-    !isDuplicate &&
-    idCheckMessage &&
-    phoneCheckMessage &&
+    !values.isIdDuplicate &&
+    values.idCheckMessage &&
+    values.phoneCheckMessage &&
     !showConfirmPwError &&
     values.agreeRequired &&
-    isVerified;
+    values.isEmailVerified;
 
   return (
     <StepOneStyle className="StepOne_wrap">
@@ -111,13 +104,12 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         handleCheck={handleCheckId}
         showError={!!showIdError}
         meta={idMeta}
-        checkMessage={idCheckMessage}
-        isDuplicate={isDuplicate}
+        checkMessage={values.idCheckMessage}
+        isDuplicate={values.isIdDuplicate}
       />
 
       <div className="StepOne_userInfo">
         <p className="SignUp_font">비밀번호</p>
-
         <div className="SignUp_inputDiv">
           <input
             className="SignUp_input"
@@ -134,7 +126,6 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
 
       <div className="StepOne_userInfo">
         <p className="SignUp_font">비밀번호 확인</p>
-
         <div className="SignUp_inputDiv">
           <input
             className="SignUp_input"
@@ -161,8 +152,8 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         handleCheck={handleCheckPhone}
         showError={!!showPhoneError}
         meta={phoneMeta}
-        checkMessage={phoneCheckMessage}
-        isDuplicate={isDuplicate}
+        checkMessage={values.phoneCheckMessage}
+        isDuplicate={values.isPhoneDuplicate}
       />
 
       <Email
@@ -170,8 +161,8 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
         emailField={emailField}
         emailMeta={emailMeta}
         showEmailError={!!showEmailError}
-        isVerified={isVerified}
-        setIsVerified={setIsVerified}
+        isVerified={values.isEmailVerified}
+        setIsVerified={(val) => setFieldValue("isEmailVerified", val)}
       />
 
       <Agree
