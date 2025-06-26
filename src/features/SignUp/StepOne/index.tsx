@@ -77,12 +77,12 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
   };
 
   const isFormValid =
-    nameField.value.trim() &&
-    idField.value.trim() &&
-    passwordField.value.trim() &&
-    confirmPasswordField.value.trim() &&
-    phoneField.value.trim() &&
-    emailField.value.trim() &&
+    (nameField.value || "").trim() &&
+    (idField.value || "").trim() &&
+    (passwordField.value || "").trim() &&
+    (confirmPasswordField.value || "").trim() &&
+    (phoneField.value || "").trim() &&
+    (emailField.value || "").trim() &&
     !isDuplicate &&
     idCheckMessage &&
     phoneCheckMessage &&
@@ -138,6 +138,7 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
             type={showPassword ? "text" : "password"}
             placeholder="비밀번호를 입력해주세요."
             {...confirmPasswordField}
+            value={confirmPasswordField.value || ""}
           />
           <div onClick={togglePassword} className="SignUp_toggle">
             {showPassword ? "숨김" : "표시"}
