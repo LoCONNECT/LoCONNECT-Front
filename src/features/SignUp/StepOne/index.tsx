@@ -45,6 +45,12 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
   } = useFormField("password");
 
   const {
+    field: confirmPasswordField,
+    meta: confirmPasswordMeta,
+    showError: showConfirmPwError,
+  } = useFormField("confirmPassword");
+
+  const {
     field: phoneField,
     meta: phoneMeta,
     showError: showPhoneError,
@@ -74,11 +80,13 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
     nameField.value.trim() &&
     idField.value.trim() &&
     passwordField.value.trim() &&
+    confirmPasswordField.value.trim() &&
     phoneField.value.trim() &&
     emailField.value.trim() &&
     !isDuplicate &&
     idCheckMessage &&
     phoneCheckMessage &&
+    !showConfirmPwError &&
     values.agreeRequired;
 
   return (
@@ -118,6 +126,25 @@ const StepOne = ({ type, onNext }: StepOneProps) => {
             {showPassword ? "숨김" : "표시"}
           </div>
           {showPwError && <p className="SignUp_error">{passwordMeta.error}</p>}
+        </div>
+      </div>
+
+      <div className="StepOne_userInfo">
+        <p className="SignUp_font">비밀번호 확인</p>
+
+        <div className="SignUp_inputDiv">
+          <input
+            className="SignUp_input"
+            type={showPassword ? "text" : "password"}
+            placeholder="비밀번호를 입력해주세요."
+            {...confirmPasswordField}
+          />
+          <div onClick={togglePassword} className="SignUp_toggle">
+            {showPassword ? "숨김" : "표시"}
+          </div>
+          {showConfirmPwError && (
+            <p className="SignUp_error">{confirmPasswordMeta.error}</p>
+          )}
         </div>
       </div>
 

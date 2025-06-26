@@ -32,7 +32,7 @@ const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
     setIsLoading(true);
 
     try {
-      await axiosInstance.post("/auth/send-code", {
+      await axiosInstance.post("/mail/send-code", {
         email: emailField.value,
       });
       setCodeSent(true);
@@ -53,7 +53,7 @@ const Email = ({ type, emailField, emailMeta, showEmailError }: EmailProps) => {
 
   const handleVerifyCode = async () => {
     try {
-      await axiosInstance.post("/auth/check-code", {
+      await axiosInstance.post("/mail/check-code", {
         email: emailField.value,
         code: inputCode,
       });

@@ -13,9 +13,12 @@ export const validationSchema = (type: "biz" | "media" | "influ") =>
     password: Yup.string()
       .required("비밀번호는 필수입니다.")
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[A-Za-z\d!@#$%^&*()_\-+=]{8,}$/,
-        "비밀번호는 8자 이상이며, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다."
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[A-Za-z\d!@#$%^&*()_\-+=]{8,}$/,
+        "비밀번호는 8자 이상이며, 영문자, 숫자, 특수문자를 포함해야 합니다."
       ),
+    confirmPassword: Yup.string()
+      .required("비밀번호 확인은 필수입니다.")
+      .oneOf([Yup.ref("password")], "비밀번호가 일치하지 않습니다."),
     phone: Yup.string()
       .required("전화번호는 필수입니다.")
       .test(
