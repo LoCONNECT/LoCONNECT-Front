@@ -89,11 +89,15 @@ const SignUp = () => {
         }
 
         try {
-          const res = await axiosInstance.post(`/auth/${type}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          const res = await axiosInstance.post(
+            `/auth/signup/${type}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
 
           console.log("유저 모든 정보 : ", res.data);
 
