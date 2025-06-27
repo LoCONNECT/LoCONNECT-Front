@@ -62,13 +62,21 @@ const Email = ({
 
   const handleVerifyCode = async () => {
     try {
-      await axiosInstance.post("/mail/check-code", {
+      const res = await axiosInstance.post("/mail/check-code", {
         email: emailField.value,
         code: inputCode,
       });
-      setIsVerified(true);
-      setMessage("이메일 인증이 완료되었습니다.");
-      setMessageType("success");
+
+      console.log(res.data);
+
+      if (res.data.result) {
+        setIsVerified(true);
+        setMessage("이메일 인증이 완료되었습니다.");
+        setMessageType("success");
+      } else {
+        setMessage("인증번호가 일치하지 않습니다.");
+        setMessageType("error");
+      }
     } catch (e) {
       if (isAxiosError(e) && e.response?.status === 400) {
         setMessage("인증번호가 일치하지 않습니다.");
@@ -109,26 +117,29 @@ const Email = ({
       </div>
 
       {codeSent && !isVerified && (
-        <div className="verify_box">
-          <label className="verify_label" htmlFor="inputCode">
+        <div className="StepOne_userInfo">
+          <label className="SignUp_font" htmlFor="inputCode">
             인증번호 입력
           </label>
-          <input
-            id="inputCode"
-            type="text"
-            className="SignUp_input"
-            placeholder="인증번호를 입력하세요"
-            value={inputCode}
-            onChange={(e) => setInputCode(e.target.value)}
-          />
-          <button
-            type="button"
-            className="SignUp_checkBtn"
-            onClick={handleVerifyCode}
-            disabled={!inputCode}
-          >
-            확인
-          </button>
+
+          <div className="SignUp_check">
+            <input
+              id="inputCode"
+              type="text"
+              className="SignUp_input"
+              placeholder="인증번호를 입력하세요"
+              value={inputCode}
+              onChange={(e) => setInputCode(e.target.value)}
+            />
+            <button
+              type="button"
+              className="SignUp_checkBtn"
+              onClick={handleVerifyCode}
+              disabled={!inputCode}
+            >
+              확인
+            </button>
+          </div>
         </div>
       )}
 
