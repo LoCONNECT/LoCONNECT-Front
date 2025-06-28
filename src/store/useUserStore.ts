@@ -54,7 +54,6 @@ type UserStore = {
   user: User | null;
   userState: UserState | null;
   setUser: (user: User) => void;
-  setUserState: (user: UserState) => void;
   logout: () => void;
 };
 
@@ -62,6 +61,5 @@ export const useUserStore = create<UserStore>((set) => ({
   user: null,
   userState: null,
   setUser: (user) => set({ user }),
-  setUserState: (user) => set({ user }),
   logout: () => set({ user: null }),
 }));
