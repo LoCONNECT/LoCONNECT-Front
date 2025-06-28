@@ -27,11 +27,17 @@ const Login = () => {
         // 로그인 요청(아이디랑 비밀번호 이런식으로 보냄 -> {id: '아이디', password: '비밀번호'})
         const res = await axiosInstance.post("/auth/login", values);
 
-        console.log("로그인 성공", res.data);
+        console.log("로그인", res.data);
 
-        // Zustand store에 유저 정보 저장
-        setUser(res.data);
-        router.push("/");
+        if (res.data.message) {
+          // 승인되지 않은 유저
+          alert(res.data.message);
+          return; // 홈으로 이동 안 함
+        } else {
+          // 승인된 유저 -> Zustand store에 유저 정보 저장
+          setUser(res.data);
+          router.push("/");
+        }
       } catch (e) {
         console.error("로그인 실패:", e);
       }
