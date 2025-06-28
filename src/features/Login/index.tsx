@@ -29,17 +29,17 @@ const Login = () => {
         const res = await axiosInstance.post("/auth/login", values);
 
         // TODO: 현재 로그인되어있는 유저의 정보 보내주기
-        // const response = await axiosInstance.get("/auth/me");
+        // const response = await axiosInstance.get("/user/me");
 
         console.log("로그인", res.data);
         // console.log("현재 로그인되어있는 사람", response.data);
 
         if (res.data.message) {
-          // 승인되지 않은 유저
           message.info(res.data.message);
           return; // 홈으로 이동 안 함
         } else {
-          // 승인된 유저 -> Zustand store에 유저 정보 저장
+          // Zustand store에 유저 정보 저장
+          // setUser(response.data);
           setUser(res.data);
           router.push("/");
         }
