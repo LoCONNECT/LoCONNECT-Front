@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
+import { message } from "antd";
 
 const Login = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const Login = () => {
 
         if (res.data.message) {
           // 승인되지 않은 유저
-          alert(res.data.message);
+          message.info(res.data.message);
           return; // 홈으로 이동 안 함
         } else {
           // 승인된 유저 -> Zustand store에 유저 정보 저장

@@ -7,13 +7,14 @@ import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { validateId } from "@/utill/validationId";
+import { message } from "antd";
 
 function isAxiosError(error: unknown): error is AxiosError {
   return typeof error === "object" && error !== null && "isAxiosError" in error;
 }
 
 const FindPw = () => {
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState("");
 
   const router = useRouter();
 
@@ -40,15 +41,15 @@ const FindPw = () => {
         // TODO: 아이디, 이메일({id: '아이디', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 임시 비밀번호 발송 요청
         await axiosInstance.post("/auth/send-password", values);
 
-        alert("임시 비밀번호가 이메일로 발송되었습니다.");
+        message.info("임시 비밀번호가 이메일로 발송되었습니다.");
 
         router.push("/login"); // 로그인 페이지로 이동
       } catch (e) {
         // TODO: NotFoundException 회원정보가 없다는 거 던져주기
         if (isAxiosError(e) && e.response?.status === 404) {
-          setMessage("입력하신 정보와 일치하는 회원이 없습니다.");
+          setMessages("입력하신 정보와 일치하는 회원이 없습니다.");
         } else {
-          setMessage("임시 비밀번호 요청 중 오류가 발생했습니다.");
+          setMessages("임시 비밀번호 요청 중 오류가 발생했습니다.");
         }
       }
     },
@@ -101,7 +102,7 @@ const FindPw = () => {
         </button>
       </form>
 
-      {message && <p className="message">{message}</p>}
+      {messages && <p className="message">{messages}</p>}
     </FindPwStyled>
   );
 };
