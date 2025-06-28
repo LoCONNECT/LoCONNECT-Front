@@ -17,8 +17,6 @@ const MobileMenu = ({
   onNavigate,
   onClose,
 }: MobileMenuProps) => {
-  if (!isOpen) return null;
-
   const handleNavigate = (path: string) => {
     onNavigate(path);
     onClose();
@@ -28,31 +26,37 @@ const MobileMenu = ({
     onLogout();
     onClose();
   };
-  console.log("AAAAAAAaa", user);
+
   return (
     <MoblieMenuStyled className={clsx("mobile_menu", { open: isOpen })}>
       {user ? (
         <>
-          <div className="mobile_item" onClick={() => handleNavigate("/alarm")}>
+          <div
+            className="mobile_item gray"
+            onClick={() => handleNavigate("/alarm")}
+          >
             알림
           </div>
           <div
-            className="mobile_item"
+            className="mobile_item gray"
             onClick={() => handleNavigate("/mypage")}
           >
             내 정보
           </div>
-          <div className="mobile_item" onClick={handleLogout}>
+          <div className="mobile_item red" onClick={handleLogout}>
             로그아웃
           </div>
         </>
       ) : (
         <>
-          <div className="mobile_item" onClick={() => handleNavigate("/login")}>
+          <div
+            className="mobile_item gray"
+            onClick={() => handleNavigate("/login")}
+          >
             로그인
           </div>
           <div
-            className="mobile_item"
+            className="mobile_item gray"
             onClick={() => handleNavigate("/signUp")}
           >
             회원가입

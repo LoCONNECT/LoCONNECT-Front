@@ -17,18 +17,25 @@ export const MoblieMenuStyled = styled.div`
     transition: transform 0.3s ease;
 
     &.open {
+      border-top: 1px solid ${({ theme }) => theme.colors.gray2Color};
       transform: translateX(0%);
     }
 
     .mobile_item {
-      font-size: 20px;
-      padding: 16px 0;
+      font-size: 16px;
+      padding: 0 16px;
       cursor: pointer;
       width: 100%;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      &:last-child {
-        border-bottom: none;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.gray2Color};
+      &.gray {
+        color: ${({ theme }) => theme.colors.gray5Color};
+      }
+      &.red {
+        color: #ff5f4a;
       }
     }
   }

@@ -9,14 +9,22 @@ import MobileLogo from "@/assets/images/MobileLogo.svg";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useUserStore } from "@/store/useUserStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MobileMenu from "../MobileMenu";
+import { useIsMobile } from "@/hooks/useResponsive";
 
 const Header = () => {
   const [clickMenu, setClickMenu] = useState(false);
   const router = useRouter();
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
+  const isMobile = useIsMobile(744);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setClickMenu(false); // PC 넘어가면 모바일 메뉴 자동 닫기
+    }
+  }, [isMobile]);
 
   // 로그아웃 클릭시
   const handleLogout = () => {
