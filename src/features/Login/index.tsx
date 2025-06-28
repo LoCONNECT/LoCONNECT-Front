@@ -28,7 +28,11 @@ const Login = () => {
         // 로그인 요청(아이디랑 비밀번호 이런식으로 보냄 -> {id: '아이디', password: '비밀번호'})
         const res = await axiosInstance.post("/auth/login", values);
 
+        // TODO: 현재 로그인되어있는 유저의 정보 보내주기
+        // const response = await axiosInstance.get("/auth/me");
+
         console.log("로그인", res.data);
+        // console.log("현재 로그인되어있는 사람", response.data);
 
         if (res.data.message) {
           // 승인되지 않은 유저
