@@ -35,7 +35,7 @@ export const FindIdStyled = styled.div`
       .findid_input {
         width: 100%;
         height: 52px;
-        border: 1px solid #e9ebef;
+        border: 1px solid ${({ theme }) => theme.colors.gray2Color};
         border-radius: 12px;
         font-size: 15px;
         padding: 17px 15px;
@@ -46,8 +46,8 @@ export const FindIdStyled = styled.div`
         width: 100%;
         height: 52px;
         border-radius: 12px;
-        border: 1px solid #1253ec;
-        background-color: #1253ec;
+        border: 1px solid ${({ theme }) => theme.colors.mainColor};
+        background-color: ${({ theme }) => theme.colors.mainColor};
         color: white;
         font-weight: 600;
         font-size: 16px;
@@ -81,7 +81,7 @@ export const FindIdStyled = styled.div`
     .verify_input {
       width: 100%;
       height: 52px;
-      border: 1px solid #e9ebef;
+      border: 1px solid ${({ theme }) => theme.colors.gray2Color};
       border-radius: 12px;
       font-size: 15px;
       padding: 17px 15px;
@@ -90,8 +90,8 @@ export const FindIdStyled = styled.div`
       width: 100%;
       height: 52px;
       border-radius: 12px;
-      border: 1px solid #1253ec;
-      background-color: #1253ec;
+      border: 1px solid ${({ theme }) => theme.colors.mainColor};
+      background-color: ${({ theme }) => theme.colors.mainColor};
       color: white;
       font-weight: 600;
       font-size: 16px;
@@ -107,7 +107,7 @@ export const FindIdStyled = styled.div`
     .message {
       margin-top: 20px;
       font-size: 14px;
-      color: #1253ec;
+      color: ${({ theme }) => theme.colors.mainColor};
       text-align: center;
       font-weight: 600;
     }

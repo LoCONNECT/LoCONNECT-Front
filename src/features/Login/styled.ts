@@ -36,7 +36,7 @@ export const LoginStyled = styled.div`
             margin-bottom: 10px;
           }
           .login_pw_box {
-            color: #999ba5;
+            color: ${({ theme }) => theme.colors.gray4Color};
             position: relative;
             .login_see {
               position: absolute;
@@ -49,7 +49,7 @@ export const LoginStyled = styled.div`
           .login_input {
             width: 100%;
             height: 52px;
-            border: 1px solid #e9ebef;
+            border: 1px solid ${({ theme }) => theme.colors.gray2Color};
             border-radius: 12px;
             font-size: 15px;
             padding: 17px 50px 15px 15px;
@@ -63,7 +63,7 @@ export const LoginStyled = styled.div`
             align-items: center;
             margin: 20px 0;
             font-size: 13px;
-            color: #6f717c;
+            color: ${({ theme }) => theme.colors.gray5Color};
             .login_find {
               cursor: pointer;
             }
@@ -79,8 +79,8 @@ export const LoginStyled = styled.div`
           .login_login_btn {
             height: 52px;
             border-radius: 12px;
-            border: 1px solid #1253ec;
-            background-color: #1253ec;
+            border: 1px solid ${({ theme }) => theme.colors.mainColor};
+            background-color: ${({ theme }) => theme.colors.mainColor};
             color: white;
             &:hover {
               cursor: pointer;
@@ -109,16 +109,16 @@ export const LoginStyled = styled.div`
           flex-direction: column;
           justify-content: space-between;
           .login_explain {
-            color: #6f717c;
+            color: ${({ theme }) => theme.colors.gray5Color};
             font-size: 14px;
             text-align: center;
           }
           .login_join_btn {
             height: 52px;
             border-radius: 12px;
-            border: 1px solid #e9ebef;
+            border: 1px solid ${({ theme }) => theme.colors.gray2Color};
             background-color: white;
-            color: #6f717c;
+            color: ${({ theme }) => theme.colors.gray5Color};
             &:hover {
               cursor: pointer;
             }

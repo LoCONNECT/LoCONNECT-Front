@@ -15,6 +15,7 @@ const Header = () => {
   const logout = useUserStore((state) => state.logout);
 
   console.log("지금 로그인한 사람", user?.name);
+  console.log("지금 로그인한 id", user?.id);
 
   // 로그아웃 클릭시
   const handleLogout = () => {

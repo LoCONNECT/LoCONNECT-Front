@@ -54,7 +54,7 @@ export const HeaderStyled = styled.div`
           }
         }
         .header_logout {
-          color: #6f717c;
+          color: ${({ theme }) => theme.colors.gray5Color};
           font-size: 16px;
           &:hover {
             cursor: pointer;
@@ -72,13 +72,13 @@ export const HeaderStyled = styled.div`
         .header_login {
           font-size: 16px;
           cursor: pointer;
-          color: #6f717c;
+          color: ${({ theme }) => theme.colors.gray5Color};
         }
 
         .header_join {
           font-size: 16px;
           cursor: pointer;
-          color: #6f717c;
+          color: ${({ theme }) => theme.colors.gray5Color};
         }
 
         .header_line {
