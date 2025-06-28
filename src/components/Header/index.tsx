@@ -14,6 +14,8 @@ const Header = () => {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
 
+  console.log("지금 로그인한 사람", user?.name);
+
   // 로그아웃 클릭시
   const handleLogout = () => {
     logout(); // user 상태 null로 초기화

@@ -24,14 +24,14 @@ const Login = () => {
     validate: validateLoginForm,
     onSubmit: async (values) => {
       try {
-        // TODO: 로그인 요청(아이디랑 비밀번호 이런식으로 보냄 -> {id: '아이디', password: '비밀번호'})
-        await axiosInstance.post("/auth/login", values);
+        // 로그인 요청(아이디랑 비밀번호 이런식으로 보냄 -> {id: '아이디', password: '비밀번호'})
+        const res = await axiosInstance.post("/auth/login", values);
 
-        // TODO: 유저 정보 요청(해당 유저의 정보 보내주기 -> 회원가입때 보내주는 유저 정보 똑같이 보내주기)
-        const res = await axiosInstance.get("/auth/user");
+        console.log("로그인 성공", res.data);
 
         // Zustand store에 유저 정보 저장
         setUser(res.data);
+        router.push("/");
       } catch (e) {
         console.error("로그인 실패:", e);
       }
