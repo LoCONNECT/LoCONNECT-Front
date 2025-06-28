@@ -1,7 +1,7 @@
 // store/useUserStore.ts
 import { create } from "zustand";
 
-type User = {
+export type User = {
   id: string;
   name: string;
   role: string;

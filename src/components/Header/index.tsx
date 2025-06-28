@@ -4,18 +4,19 @@ import Logo from "@/assets/images/Logo.svg";
 import MyPageIcon from "@/assets/images/MyPage.svg";
 import AlarmIcon from "@/assets/images/Alarm.svg";
 import MenuIcon from "@/assets/images/Menu.svg";
+import CancelIcon from "@/assets/images/Cancel.svg";
 import MobileLogo from "@/assets/images/MobileLogo.svg";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useUserStore } from "@/store/useUserStore";
+import { useState } from "react";
+import MobileMenu from "../MobileMenu";
 
 const Header = () => {
+  const [clickMenu, setClickMenu] = useState(false);
   const router = useRouter();
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
-
-  console.log("지금 로그인한 사람", user?.name);
-  console.log("지금 로그인한 id", user?.id);
 
   // 로그아웃 클릭시
   const handleLogout = () => {
@@ -83,13 +84,24 @@ const Header = () => {
             </span>
           </div>
         )}
-
-        {/* 모바일 메뉴 */}
-        <Image
-          className="header_mobile_menu"
-          src={MenuIcon}
-          alt="모바일 메뉴"
-        />
+        <div className="header_mobile_box">
+          {/* 모바일 메뉴 */}
+          <Image
+            className="header_mobile_menu"
+            onClick={() => {
+              setClickMenu((prev) => !prev);
+            }}
+            src={clickMenu ? CancelIcon : MenuIcon}
+            alt="모바일 메뉴"
+          />
+          <MobileMenu
+            isOpen={clickMenu}
+            user={user}
+            onLogout={handleLogout}
+            onNavigate={router.push}
+            onClose={() => setClickMenu(false)}
+          />
+        </div>
       </div>
     </HeaderStyled>
   );

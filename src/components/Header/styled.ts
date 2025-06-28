@@ -94,11 +94,13 @@ export const HeaderStyled = styled.div`
         }
       }
 
-      .header_mobile_menu {
+      .header_mobile_box {
         display: none;
-        width: 32px;
-        height: 32px;
-        cursor: pointer;
+        .header_mobile_menu {
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
+        }
         @media (max-width: 744px) {
           display: block;
         }
