@@ -4,6 +4,7 @@
 
   --main-color: #1253ec;
   --gray2-color: #e9ebef;
+  --gray3-color: #c5c6cd;
   --gray5-color: #6f717c;
   --black-color: #131415;
 }
@@ -159,6 +160,38 @@ input::placeholder {
   ):not(.ant-btn-disabled):hover {
   color: black;
   border-color: #d9d9d9;
+}
+
+:where(.css-dev-only-do-not-override-36gkoj).ant-select-single {
+  width: 130px;
+  height: 44px;
+}
+
+:where(.css-dev-only-do-not-override-36gkoj).ant-select-outlined:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border-color: var(--gray3-color);
+}
+
+:where(.css-dev-only-do-not-override-36gkoj).ant-select-outlined:not(
+    .ant-select-disabled
+  ):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover
+  .ant-select-selector {
+  border-color: var(--gray3-color);
+  outline: none;
+  box-shadow: none;
+}
+
+.ant-select-focused:where(
+    .css-dev-only-do-not-override-36gkoj
+  ).ant-select-outlined:not(.ant-select-disabled):not(
+    .ant-select-customize-input
+  ):not(.ant-pagination-size-changer)
+  .ant-select-selector {
+  border-color: var(--gray3-color) !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 @media (prefers-color-scheme: dark) {
