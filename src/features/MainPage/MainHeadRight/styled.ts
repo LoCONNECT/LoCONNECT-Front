@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const MainHeadRightStyle = styled.div`
   &.MainHeadRight_wrap {
-    width: 335px;
+    width: 100%;
+    max-width: 335px;
     height: 44px;
     display: flex;
     gap: 8px;

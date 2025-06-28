@@ -26,6 +26,12 @@ export const MainHeadLeftStyle = styled.div`
         width: 16px;
         height: 16px;
       }
+
+      @media (max-width: 850px) {
+        .MainHeadLeft_text {
+          display: none;
+        }
+      }
     }
 
     .active {
@@ -40,14 +46,32 @@ export const MainHeadLeftStyle = styled.div`
 
     .youtubeMenu {
       width: 90px;
+
+      @media (max-width: 850px) {
+        & {
+          width: 48px;
+        }
+      }
     }
 
     .instaMenu {
       width: 112px;
+
+      @media (max-width: 850px) {
+        & {
+          width: 48px;
+        }
+      }
     }
 
     .blogMenu {
       width: 126px;
+
+      @media (max-width: 850px) {
+        & {
+          width: 48px;
+        }
+      }
     }
   }
 `;

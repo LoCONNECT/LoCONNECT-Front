@@ -13,6 +13,12 @@ export const MainStyle = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      @media (max-width: 630px) {
+        flex-direction: column;
+        align-items: start;
+        gap: 24px;
+      }
     }
   }
 `;

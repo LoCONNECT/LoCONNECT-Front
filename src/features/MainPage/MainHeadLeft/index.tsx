@@ -4,13 +4,21 @@ import { useState } from "react";
 import Image from "next/image";
 import { Select, Space } from "antd";
 
-interface MainHeadLeftProps {
-  type: string | string[] | undefined;
+interface OptionType {
+  value: string;
+  label: string;
 }
 
-const MainHeadLeft = ({ type }: MainHeadLeftProps) => {
-  const [menu, setMenu] = useState("all");
+interface MainHeadLeftProps {
+  type: string | string[] | undefined;
+  menu: string;
+  setMenu: React.Dispatch<
+    React.SetStateAction<"all" | "youtube" | "insta" | "blog">
+  >;
+  option: OptionType[];
+}
 
+const MainHeadLeft = ({ type, menu, setMenu, option }: MainHeadLeftProps) => {
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
@@ -37,7 +45,7 @@ const MainHeadLeft = ({ type }: MainHeadLeftProps) => {
             <div className="MainHeadLeft_Icon">
               <Image src="/icon/youtubeIcon.png" alt="youtube icon" fill />
             </div>
-            <p>유튜브</p>
+            <p className="MainHeadLeft_text">유튜브</p>
           </div>
 
           <div
@@ -49,7 +57,7 @@ const MainHeadLeft = ({ type }: MainHeadLeftProps) => {
             <div className="MainHeadLeft_Icon">
               <Image src="/icon/instaIcon.png" alt="instagram icon" fill />
             </div>
-            <p>인스타그램</p>
+            <p className="MainHeadLeft_text">인스타그램</p>
           </div>
 
           <div
@@ -61,18 +69,14 @@ const MainHeadLeft = ({ type }: MainHeadLeftProps) => {
             <div className="MainHeadLeft_Icon">
               <Image src="/icon/blogIcon.png" alt="naver blog icon" fill />
             </div>
-            <p>네이버 블로그</p>
+            <p className="MainHeadLeft_text">네이버 블로그</p>
           </div>
         </>
       ) : (
         <Select
           defaultValue="Chungbuk"
           onChange={(value) => handleChange(value)}
-          options={[
-            { value: "Chungbuk", label: "충북" },
-            { value: "Chungju", label: "충주" },
-            { value: "Cheongju", label: "청주" },
-          ]}
+          options={option}
         />
       )}
     </MainHeadLeftStyle>
