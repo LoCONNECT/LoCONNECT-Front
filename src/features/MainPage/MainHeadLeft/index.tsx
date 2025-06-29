@@ -3,6 +3,7 @@ import { MainHeadLeftStyle } from "./styled";
 import { useState } from "react";
 import Image from "next/image";
 import { Select, Space } from "antd";
+import { useMainStore } from "@/store/mainCardStore";
 
 interface OptionType {
   value: string;
@@ -16,11 +17,18 @@ interface MainHeadLeftProps {
     React.SetStateAction<"all" | "youtube" | "insta" | "blog">
   >;
   option: OptionType[];
+  setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const MainHeadLeft = ({ type, menu, setMenu, option }: MainHeadLeftProps) => {
+const MainHeadLeft = ({
+  type,
+  menu,
+  setMenu,
+  option,
+  setSelectedOption,
+}: MainHeadLeftProps) => {
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+    setSelectedOption(value);
   };
 
   return (
@@ -74,7 +82,7 @@ const MainHeadLeft = ({ type, menu, setMenu, option }: MainHeadLeftProps) => {
         </>
       ) : (
         <Select
-          defaultValue="Chungbuk"
+          defaultValue="all"
           onChange={(value) => handleChange(value)}
           options={option}
         />

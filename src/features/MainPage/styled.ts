@@ -20,5 +20,10 @@ export const MainStyle = styled.div`
         gap: 24px;
       }
     }
+
+    .Main_body {
+      width: 100%;
+      display: flex;
+    }
   }
 `;
