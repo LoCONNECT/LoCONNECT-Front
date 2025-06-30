@@ -1,4 +1,4 @@
-// store/useUserStore.ts
+import axiosInstance from "@/lib/axios";
 import { create } from "zustand";
 
 export type User = {
@@ -13,6 +13,7 @@ type UserCommon = {
   role: string;
   email: string;
   phone: string;
+  acceptStatus: string;
   agreeRequired: boolean;
   agreeOptional: boolean;
   type: "biz" | "media" | "influ";
@@ -53,8 +54,9 @@ type UserState = BizUser | MediaUser | InfluUser;
 type UserStore = {
   user: User | null;
   userState: UserState | null;
-  setUser: (user: User) => void;
+  setUser: (user: User | null) => void;
   logout: () => void;
+  loadUserProfile: () => Promise<void>;
 };
 
 export const useUserStore = create<UserStore>((set) => ({
@@ -62,4 +64,18 @@ export const useUserStore = create<UserStore>((set) => ({
   userState: null,
   setUser: (user) => set({ user }),
   logout: () => set({ user: null }),
+  loadUserProfile: async () => {
+    try {
+      const res = await axiosInstance.get<User>("/users/profile");
+      console.log("현재 로그인한 사용자", res.data);
+      set({ user: res.data });
+    } catch (e: any) {
+      // 401에러(로그인 안 된 상태)
+      if (e?.response?.status === 401) {
+        set({ user: null });
+      } else {
+        console.error(e);
+      }
+    }
+  },
 }));

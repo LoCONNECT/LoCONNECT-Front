@@ -12,6 +12,7 @@ import { useUserStore } from "@/store/useUserStore";
 import { useEffect, useState } from "react";
 import MobileMenu from "../MobileMenu";
 import { useIsMobile } from "@/hooks/useResponsive";
+import axiosInstance from "@/lib/axios";
 
 const Header = () => {
   const [clickMenu, setClickMenu] = useState(false);
@@ -27,7 +28,9 @@ const Header = () => {
   }, [isMobile]);
 
   // 로그아웃 클릭시
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // TODO: 로그아웃 요청(토큰 삭제해주기) -> 없으면 로그인된 사용자로 인식됨
+    // await axiosInstance.post("/auth/logout");
     logout(); // user 상태 null로 초기화
     router.push("/login"); // 로그인 페이지로 이동
   };
