@@ -194,40 +194,17 @@ input::placeholder {
   box-shadow: none !important;
 }
 
-/* antd 모달 커스텀 */
-.custom-modal .ant-modal-content {
-  border-radius: 16px;
-  padding: 0;
-}
-
-.custom-modal .ant-modal-header {
-  border-bottom: 1px solid var(--gray2-color);
-  padding: 15px 15px 15px 20px;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.custom-modal .ant-modal-title {
-  color: #333;
-}
-
-.custom-modal .ant-modal-body {
-  text-align: center;
-  padding: 10px;
-  color: #555;
-  font-size: 16px;
-}
-
-.custom-modal .ant-modal-footer {
-  display: none;
-}
-
 /* modal 이미지 */
 .modal_img {
   position: relative;
   width: 230px;
   height: 250px;
-  margin: -20px auto 0 auto;
+  margin: 0 auto;
+}
+
+.modalText {
+  text-align: center;
+  font-size: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
