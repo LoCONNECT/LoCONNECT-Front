@@ -89,10 +89,18 @@ export const useTokenStore = create<UserToken>((set) => ({
   isLoggedIn: false,
   checkToken: async () => {
     try {
-      await axiosInstance.get("/auth/isLoggedIn");
-      set({ isLoggedIn: true });
-      return true;
+      const res = await axiosInstance.get("/auth/isLoggedIn");
+
+      // 토큰이 있을 때 : status ture, 없을 때 : status false
+      if (res.data.status) {
+        set({ isLoggedIn: true });
+        return true;
+      } else {
+        set({ isLoggedIn: false });
+        return false;
+      }
     } catch (e) {
+      console.log("토큰 체크(useTokenStore) : ", e);
       set({ isLoggedIn: false });
       return false;
     }

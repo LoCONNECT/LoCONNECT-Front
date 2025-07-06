@@ -8,7 +8,7 @@ import CancelIcon from "@/assets/images/Cancel.svg";
 import MobileLogo from "@/assets/images/MobileLogo.svg";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useUserStore } from "@/store/useUserStore";
+import { useTokenStore, useUserStore } from "@/store/useUserStore";
 import { useEffect, useState } from "react";
 import MobileMenu from "../MobileMenu";
 import { useIsMobile } from "@/hooks/useResponsive";
@@ -20,12 +20,26 @@ const Header = () => {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
   const isMobile = useIsMobile(744);
+  const checkToken = useTokenStore((state) => state.checkToken);
+  const loadUserProfile = useUserStore((state) => state.loadUserProfile);
 
   useEffect(() => {
     if (!isMobile) {
       setClickMenu(false); // PC 넘어가면 모바일 메뉴 자동 닫기
     }
   }, [isMobile]);
+
+  useEffect(() => {
+    const initUser = async () => {
+      if (!user) {
+        const hasToken = await checkToken();
+        if (hasToken) {
+          await loadUserProfile();
+        }
+      }
+    };
+    // initUser();
+  }, [user]);
 
   // 로그아웃 클릭시
   const handleLogout = async () => {
