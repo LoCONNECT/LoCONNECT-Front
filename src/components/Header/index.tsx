@@ -43,7 +43,7 @@ const Header = () => {
 
   // 로그아웃 클릭시
   const handleLogout = async () => {
-    // TODO: 로그아웃 요청(토큰 삭제해주기) -> 없으면 로그인된 사용자로 인식됨
+    // 로그아웃 요청(토큰 삭제해주기) -> 없으면 로그인된 사용자로 인식됨
     await axiosInstance.post("/auth/logout");
     logout(); // user 상태 null로 초기화
     router.push("/login"); // 로그인 페이지로 이동
