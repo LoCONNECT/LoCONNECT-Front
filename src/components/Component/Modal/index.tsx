@@ -25,7 +25,6 @@ const ModalContainer = ({
       onCancel={() => setModalOpen(false)}
       footer={null}
       className="custom-modal"
-      bodyStyle={{ padding: "24px", fontSize: "16px" }}
     >
       <div className={clsx(`modal_img ${type}`)}>
         <Image src={`/modalImg/${type}.png`} alt={type} fill />

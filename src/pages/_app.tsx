@@ -6,6 +6,7 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   const loadUserProfile = useUserStore((state) => state.loadUserProfile);
@@ -24,6 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <Head>
+        <title>LoConnect</title>
+        <link rel="icon" href="/icon/MobileLogo.svg" />
+      </Head>
       <ThemeProvider theme={theme}>
         <Header />
         <Component {...pageProps} />
