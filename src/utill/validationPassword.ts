@@ -2,7 +2,7 @@
 export const validatePassword = (password: string): string | undefined => {
   if (!password) return "비밀번호를 입력하지 않았습니다.";
   if (
-    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[A-Za-z\d!@#$%^&*()_\-+=]{8,}$/.test(
+    !/^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[A-Za-z\d!@#$%^&*()_\-+=]{8,}$/.test(
       password
     )
   ) {

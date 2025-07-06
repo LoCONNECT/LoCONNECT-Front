@@ -59,6 +59,11 @@ type UserStore = {
   loadUserProfile: () => Promise<void>;
 };
 
+type UserToken = {
+  isLoggedIn: boolean;
+  checkToken: () => Promise<boolean>;
+};
+
 export const useUserStore = create<UserStore>((set) => ({
   user: null,
   userState: null,
@@ -76,6 +81,20 @@ export const useUserStore = create<UserStore>((set) => ({
       } else {
         console.error(e);
       }
+    }
+  },
+}));
+
+export const useTokenStore = create<UserToken>((set) => ({
+  isLoggedIn: false,
+  checkToken: async () => {
+    try {
+      await axiosInstance.get("/auth/isLoggedIn");
+      set({ isLoggedIn: true });
+      return true;
+    } catch (e) {
+      set({ isLoggedIn: false });
+      return false;
     }
   },
 }));

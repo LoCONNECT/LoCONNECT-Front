@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SignUpStyle } from "./styled";
 import clsx from "clsx";
 import UserType from "./UserType";
@@ -8,20 +8,35 @@ import { Form, Formik } from "formik";
 import { initialValues } from "@/utill/signUp/initialValues";
 import { validationSchema } from "@/utill/signUp/validationSchema";
 import axios from "axios";
-import { useUserStore } from "@/store/useUserStore";
+import { useTokenStore, useUserStore } from "@/store/useUserStore";
 import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
+import ModalContainer from "@/components/Component/Modal";
 
 const SignUp = () => {
   const [step, setStep] = useState<1 | 2>(1);
   // 소상공인 : biz, 방송국 : media, 인플루언서 : influ
   const [type, setType] = useState<"biz" | "media" | "influ">("biz");
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [imgType, setImgType] = useState("");
+
   const isFile = (value: any): value is File => {
     return value instanceof File;
   };
 
   const router = useRouter();
+
+  useEffect(() => {
+    const check = async () => {
+      const loggedIn = await useTokenStore.getState().checkToken();
+      if (loggedIn) {
+        router.replace("/");
+      }
+    };
+    check();
+  }, []);
 
   return (
     <Formik
@@ -99,14 +114,30 @@ const SignUp = () => {
             }
           );
 
-          console.log("유저 모든 정보 : ", res.data);
+          setModalContent(
+            <>
+              <p>회원가입이 완료되었습니다.</p>
+              <p>
+                관리자의 승인 후,
+                <b style={{ color: "#0070f3" }}>승인 결과가 이메일로 발송</b>
+                되며,
+              </p>
+              <p> 승인 완료 시 로그인이 가능합니다.</p>
+              <p>감사합니다.</p>
+            </>
+          );
+          setImgType("signup_success");
+          setModalOpen(true);
 
-          // 상태 저장
-          // useUserStore.getState().setUser(res.data.user);
-
-          // router.push("/");
+          if (!modalOpen) {
+            router.push("/");
+          }
         } catch (e) {
-          console.error("회원가입 실패:", e);
+          setModalContent(<p>이미 가입된 이메일입니다.</p>);
+          setImgType("signup_error");
+          setModalOpen(true);
+
+          console.log("회원가입 실패:", e);
           // 실패 메시지 띄우기 등 추가 처리 가능
         }
       }}
@@ -134,12 +165,33 @@ const SignUp = () => {
                   <p className="SignUp_font">회원유형</p>
                   <UserType type={type} setType={setType} />
                 </div>
-                <StepOne type={type} onNext={() => setStep(2)} />
+                <StepOne
+                  type={type}
+                  onNext={() => {
+                    window.scrollTo(0, 0);
+                    setStep(2);
+                  }}
+                />
               </div>
             )}
 
-            {step === 2 && <StepTwo type={type} onPrev={() => setStep(1)} />}
+            {step === 2 && (
+              <StepTwo
+                type={type}
+                onPrev={() => {
+                  window.scrollTo(0, 0);
+                  setStep(1);
+                }}
+              />
+            )}
           </div>
+
+          <ModalContainer
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            modalContent={modalContent}
+            type={imgType}
+          />
         </SignUpStyle>
       </Form>
     </Formik>

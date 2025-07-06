@@ -41,12 +41,20 @@ const Email = ({
     setIsLoading(true);
 
     try {
-      await axiosInstance.post("/mail/send-code", {
+      const res = await axiosInstance.post("/mail/send-code", {
         email: emailField.value,
       });
-      setCodeSent(true);
-      setMessage("인증번호가 이메일로 발송되었습니다.");
-      setMessageType("success");
+
+      console.log(res.data);
+
+      if (res.data.message) {
+        setMessage("이미 등록된 이메일입니다.");
+        setMessageType("error");
+      } else {
+        setCodeSent(true);
+        setMessage("인증번호가 이메일로 발송되었습니다.");
+        setMessageType("success");
+      }
     } catch (e) {
       if (isAxiosError(e) && e.response?.status === 404) {
         setMessage("등록되지 않은 이메일입니다.");
