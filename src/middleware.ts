@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
   if (
     !token &&
     (pathname.startsWith("/alarm") ||
-      pathname.startsWith("/mypage") ||
+      // pathname.startsWith("/mypage") ||
       pathname.startsWith("/main"))
   ) {
     const url = request.nextUrl.clone();

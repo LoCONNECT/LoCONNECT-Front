@@ -19,6 +19,8 @@ export default function App({ Component, pageProps }: AppProps) {
       router.pathname !== "/login" &&
       router.pathname !== "/signUp" &&
       router.pathname !== "/findid" &&
+      // 테스트용 경로
+      router.pathname !== "/mypage" &&
       router.pathname !== "/findpw"
     ) {
       loadUserProfile();
