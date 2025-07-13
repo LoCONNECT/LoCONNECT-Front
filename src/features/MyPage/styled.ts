@@ -259,7 +259,7 @@ export const ModalOverlay = styled.div`
 
 export const StoreEditModalWrap = styled.div`
   width: 80%;
-  height: 100%;
+  height: 95%;
   overflow-y: scroll;
   background: #fff;
   border-radius: 16px;
