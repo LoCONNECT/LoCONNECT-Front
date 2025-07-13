@@ -77,7 +77,14 @@ const Header = () => {
           <div className="header_menu_box">
             <div className="header_icon_box">
               {/* 내정보 icon */}
-              <Image className="header_icon" src={MyPageIcon} alt="내정보" />
+              <Image
+                className="header_icon"
+                src={MyPageIcon}
+                alt="내정보"
+                onClick={() => {
+                  router.push("/mypage");
+                }}
+              />
 
               {/* 알림 icon */}
               <Image className="header_icon" src={AlarmIcon} alt="알림" />
