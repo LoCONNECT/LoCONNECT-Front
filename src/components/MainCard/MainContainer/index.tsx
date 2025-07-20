@@ -1,15 +1,22 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface MainContainerProps {
-  type: string | string[] | undefined;
+  type: string;
   v: MediaType | RestaurantType;
 }
 
 const MainContainer = ({ type, v }: MainContainerProps) => {
+  const router = useRouter();
+
+  const handleClick = (id: number) => {
+    router.push(`/detail?id=${id}`);
+  };
+
   if (type === "media") {
     const media = v as MediaType;
     return (
-      <div className="MainCard_card">
+      <div className="MainCard_card" onClick={() => handleClick(media.id)}>
         <div className="MainCard_img">
           <Image src={`${media.image}`} alt="media image" fill />
           <div className="MainCard_type">
@@ -42,7 +49,19 @@ const MainContainer = ({ type, v }: MainContainerProps) => {
           <div className="MainCard_infoBox">
             <div className="MainCard_infos">
               <p>채널명: {media.programName}</p>
-              <p>이름: {media.userName}</p>
+              <p
+                onClick={() =>
+                  router.push({
+                    pathname: "/detail",
+                    query: {
+                      id: media.id,
+                      type: type,
+                    },
+                  })
+                }
+              >
+                이름: {media.userName}
+              </p>
             </div>
 
             <p className="MainCard_price">
@@ -55,7 +74,7 @@ const MainContainer = ({ type, v }: MainContainerProps) => {
   } else {
     const restaurant = v as RestaurantType;
     return (
-      <div className="MainCard_card">
+      <div className="MainCard_card" onClick={() => handleClick(restaurant.id)}>
         <div className="MainCard_img">
           <Image src={`${restaurant.img}`} alt="media image" fill />
         </div>

@@ -6,10 +6,41 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import MainCard from "@/components/MainCard";
 import { useMainStore } from "@/store/mainCardStore";
+import { useUserStore } from "@/store/useUserStore";
 
 const MainPage = () => {
   const router = useRouter();
-  const { type } = router.query;
+  const adminType = router.query.adminType as string;
+
+  const setUseType = useMainStore((state) => state.setType);
+  const getType = useMainStore((state) => state.type);
+  const user = useUserStore((state) => state.user);
+
+  const [type, setType] = useState("");
+
+  useEffect(() => {
+    if (user?.role === "admin") {
+      console.log("asfsd");
+      setUseType(adminType!);
+    } else if (user?.role === "biz") {
+      setUseType("media");
+    } else {
+      setUseType("restaurant");
+    }
+  }, [user, router.query]);
+
+  useEffect(() => {
+    if (!getType || !adminType) return;
+
+    if (getType) {
+      setType(getType);
+    } else {
+      setType(adminType);
+    }
+
+    console.log("adminType", adminType);
+    console.log("type : ", type);
+  }, [getType]);
 
   const [menu, setMenu] = useState<"all" | "youtube" | "insta" | "blog">("all");
   const [option, setOption] = useState<OptionType[]>([]);
