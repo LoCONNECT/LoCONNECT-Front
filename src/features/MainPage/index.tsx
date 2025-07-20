@@ -20,7 +20,6 @@ const MainPage = () => {
 
   useEffect(() => {
     if (user?.role === "admin") {
-      console.log("asfsd");
       setUseType(adminType!);
     } else if (user?.role === "biz") {
       setUseType("media");
@@ -51,6 +50,7 @@ const MainPage = () => {
   const [restaurant, setRestaurant] = useState<RestaurantType[]>([]);
 
   useEffect(() => {
+    // 데이터 요청
     const getRegion = async () => {
       try {
         // const res = await axios.get(`/main/${type}`);
@@ -205,24 +205,29 @@ const MainPage = () => {
     getRegion();
   }, [type]);
 
+  // 방송 리스트 검색 필터 -> 선택된 매체 데이터만
   const filteredMedia =
     menu === "all" ? media : media.filter((m) => m.type === menu);
 
+  // 방송 리스트 검색창
   const searchedMedia = search
     ? filteredMedia.filter((m) =>
         m.title.toLowerCase().includes(search.toLowerCase())
       )
     : filteredMedia;
 
+  // 식당 지역 선택
   const selectedOptionLabel = selectedOption
     ? option.find((opt) => opt.value === selectedOption)?.label || ""
     : "";
 
+  // 식당 리스트 검색 필더 -> 선택된 지역의 데이터만
   const filteredRestaurant =
     !selectedOptionLabel || selectedOptionLabel === "전체"
       ? restaurant
       : restaurant.filter((r) => r.bizAddress.includes(selectedOptionLabel));
 
+  // 식당 리스트 검색창
   const searchedRestaurant = search
     ? filteredRestaurant.filter((r) =>
         r.bizName.toLowerCase().includes(search.toLowerCase())
@@ -232,6 +237,7 @@ const MainPage = () => {
   return (
     <MainStyle className="Main_wrap">
       <div className="Main_header">
+        {/* type에 따라 검색 필터 따로 */}
         <MainHeadLeft
           type={type}
           menu={menu}
@@ -239,10 +245,12 @@ const MainPage = () => {
           option={option}
           setSelectedOption={setSelectedOption}
         />
+        {/* 검색창 */}
         <MainHeadRight setSearch={setSearch} />
       </div>
 
       <div className="Main_body">
+        {/* 타입에 따른 리스트 */}
         <MainCard
           type={type}
           media={searchedMedia}

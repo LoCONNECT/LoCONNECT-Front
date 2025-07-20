@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface MainStore {
   restaurant: RestaurantType[];
@@ -11,13 +12,21 @@ interface MainStore {
   setType: (type: string) => void;
 }
 
-export const useMainStore = create<MainStore>((set) => ({
-  restaurant: [],
-  setRestaurant: (restaurant) => set({ restaurant }),
+// persist로 새로고침 시 복원.
+export const useMainStore = create<MainStore>()(
+  persist(
+    (set) => ({
+      restaurant: [],
+      setRestaurant: (restaurant) => set({ restaurant }),
 
-  media: [],
-  setMedia: (media) => set({ media }),
+      media: [],
+      setMedia: (media) => set({ media }),
 
-  type: null,
-  setType: (type) => set({ type }),
-}));
+      type: null,
+      setType: (type) => set({ type }),
+    }),
+    {
+      name: "main-store",
+    }
+  )
+);
