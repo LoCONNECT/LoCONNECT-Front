@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import Head from "next/head";
+import Footer from "@/components/Footer";
 
 export default function App({ Component, pageProps }: AppProps) {
   const loadUserProfile = useUserStore((state) => state.loadUserProfile);
@@ -35,7 +36,10 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <Header />
-        <Component {...pageProps} />
+        <main>
+          <Component {...pageProps} />
+        </main>
+        {/* <Footer /> */}
       </ThemeProvider>
     </>
   );
