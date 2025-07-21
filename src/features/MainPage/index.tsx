@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import MainHeadLeft from "./MainHeadLeft";
 import MainHeadRight from "./MainHeadRight";
 import { MainStyle } from "./styled";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import MainCard from "@/components/MainCard";
 import { useMainStore } from "@/store/mainCardStore";
@@ -48,6 +48,11 @@ const MainPage = () => {
 
   const [media, setMedia] = useState<MediaType[]>([]);
   const [restaurant, setRestaurant] = useState<RestaurantType[]>([]);
+
+  const [searchedMedia, setSearchedMedia] = useState<MediaType[]>([]);
+  const [searchedRestaurant, setSearchedRestaurant] = useState<
+    RestaurantType[]
+  >([]);
 
   useEffect(() => {
     // 데이터 요청
@@ -206,15 +211,11 @@ const MainPage = () => {
   }, [type]);
 
   // 방송 리스트 검색 필터 -> 선택된 매체 데이터만
-  const filteredMedia =
-    menu === "all" ? media : media.filter((m) => m.type === menu);
+  const filteredMedia = useMemo(() => {
+    return menu === "all" ? media : media.filter((m) => m.type === menu);
+  }, [media, menu]);
 
-  // 방송 리스트 검색창
-  const searchedMedia = search
-    ? filteredMedia.filter((m) =>
-        m.title.toLowerCase().includes(search.toLowerCase())
-      )
-    : filteredMedia;
+  console.log("filteredMedia", filteredMedia);
 
   // 식당 지역 선택
   const selectedOptionLabel = selectedOption
@@ -222,17 +223,33 @@ const MainPage = () => {
     : "";
 
   // 식당 리스트 검색 필더 -> 선택된 지역의 데이터만
-  const filteredRestaurant =
-    !selectedOptionLabel || selectedOptionLabel === "전체"
-      ? restaurant
-      : restaurant.filter((r) => r.bizAddress.includes(selectedOptionLabel));
+  const filteredRestaurant = useMemo(() => {
+    if (!selectedOptionLabel || selectedOptionLabel === "전체")
+      return restaurant;
+    return restaurant.filter((r) => r.bizAddress.includes(selectedOptionLabel));
+  }, [restaurant, selectedOptionLabel]);
 
-  // 식당 리스트 검색창
-  const searchedRestaurant = search
-    ? filteredRestaurant.filter((r) =>
-        r.bizName.toLowerCase().includes(search.toLowerCase())
-      )
-    : filteredRestaurant;
+  useEffect(() => {
+    if (type === "restaurant") {
+      setSearchedRestaurant(
+        search
+          ? filteredRestaurant.filter((r) =>
+              r.bizName.toLowerCase().includes(search.toLowerCase())
+            )
+          : filteredRestaurant
+      );
+    } else if (type === "media") {
+      setSearchedMedia(
+        search
+          ? filteredMedia.filter((m) =>
+              m.title.toLowerCase().includes(search.toLowerCase())
+            )
+          : filteredMedia
+      );
+    }
+  }, [filteredMedia, filteredRestaurant, search, type, media, restaurant]);
+
+  console.log("searchedRestaurant", searchedRestaurant);
 
   return (
     <MainStyle className="Main_wrap">

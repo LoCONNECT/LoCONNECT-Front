@@ -2,12 +2,14 @@ import MainContainer from "./MainContainer";
 import { MainCardStyle } from "./styled";
 
 interface MainCardProps {
-  type: string | string[] | undefined;
+  type: string;
   media: MediaType[];
   restaurant: RestaurantType[];
 }
 
 const MainCard = ({ type, media, restaurant }: MainCardProps) => {
+  console.log("restaurant", restaurant);
+
   return (
     <MainCardStyle className="MainCard_container">
       {type === "media"
