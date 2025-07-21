@@ -1,9 +1,13 @@
+"use client";
+
 import { useRouter } from "next/router";
 import { DetailStyled } from "./styled";
 import { useMainStore } from "@/store/mainCardStore";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import Image from "next/image";
+import { notification } from "antd";
+import axiosInstance from "@/lib/axios";
 
 const Detail = () => {
   const router = useRouter();
@@ -21,6 +25,10 @@ const Detail = () => {
   );
   const [image, setImage] = useState("");
 
+  const [hasApplied, setHasApplied] = useState(false);
+
+  const [api, contextHolder] = notification.useNotification();
+
   // 관리자, 유저에 따라 type 저장
   useEffect(() => {
     if (!getType) {
@@ -34,7 +42,7 @@ const Detail = () => {
     }
   }, [getType, user, router.query]);
 
-  // page id, type에 따라 데이터 가져옴
+  // page id, type에 따라 상세 데이터 가져옴
   useEffect(() => {
     if (!id || !type) {
       setImage("/mainImg/emptyImg.jpg");
@@ -51,6 +59,50 @@ const Detail = () => {
       setImage(found?.img!);
     }
   }, [id, type, media, restaurant, router.query]);
+
+  // 유저가 해당 게시글을 신청했는지의 유무가 필요
+  useEffect(() => {
+    const fetchApplied = async () => {
+      if (!id || !type || !user) return;
+
+      try {
+        const res = await axiosInstance.get(`/main/${type}/${id}/applied`);
+        setHasApplied(res.data.applied);
+      } catch (e) {
+        console.error("신청 여부 확인 실패", e);
+      }
+    };
+
+    fetchApplied();
+  }, [id, type, user]);
+
+  const handleApply = async (id: number, type: string) => {
+    if (id === 0) {
+      api.info({
+        message: "신청 오류",
+        description: "유효하지 않은 항목입니다.",
+        placement: "top",
+      });
+      return;
+    }
+
+    // 신청 요청 -> id만 보냈는데 다른 것도 보내야하면 알려주십쇼
+    try {
+      await axiosInstance.post(`/main/${type}/apply`, { id });
+
+      api.success({
+        message: "신청 성공",
+        description: "신청이 정상적으로 완료되었습니다.",
+        placement: "top",
+      });
+    } catch (error) {
+      api.error({
+        message: "신청 실패",
+        description: "신청 중 오류가 발생했습니다.",
+        placement: "top",
+      });
+    }
+  };
 
   return (
     <DetailStyled className="Detail_wrap">
@@ -74,10 +126,60 @@ const Detail = () => {
         </div>
 
         <div className="Detail_content">
-          {type === "medai"
-            ? mediaItem?.programName
-            : restaurantItem?.bizAddress}
+          <p className="Detail_subTitle">
+            {type === "media"
+              ? `채널명 : ${mediaItem?.programName ?? ""}`
+              : restaurantItem?.bizAddress ?? ""}
+          </p>
+
+          <p className="Detail_title">
+            {type === "media"
+              ? `"${mediaItem?.title ?? ""}"`
+              : restaurantItem?.bizName ?? ""}
+          </p>
+
+          <div className="Detail_texts">
+            <p className="Detail_price">
+              <span className="Detail_label">희망가격: </span>
+              <span className="Detail_value">
+                {type === "media"
+                  ? mediaItem?.price.toLocaleString() ?? ""
+                  : restaurantItem?.price.toLocaleString() ?? ""}
+                원
+              </span>
+            </p>
+
+            <div className="Detail_description">
+              <p className="Detail_label">
+                {type === "media" ? "프로그램 설명: " : "소개글: "}
+              </p>
+              <p className="Detail_value">
+                {type === "media"
+                  ? mediaItem?.programIntro ?? ""
+                  : restaurantItem?.intro ?? ""}
+              </p>
+            </div>
+
+            <p className="Detail_link">
+              {(type === "media" && mediaItem?.channelPR) ?? ""}
+            </p>
+          </div>
         </div>
+      </div>
+
+      <div className="Detail_btnContainer">
+        <button
+          className="Detail_btn"
+          onClick={() =>
+            handleApply(
+              type === "media" ? mediaItem?.id ?? 0 : restaurantItem?.id ?? 0,
+              type
+            )
+          }
+          disabled={hasApplied}
+        >
+          {hasApplied ? "신청 완료" : "신청하기"}
+        </button>
       </div>
     </DetailStyled>
   );
