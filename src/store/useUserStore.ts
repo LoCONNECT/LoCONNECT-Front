@@ -49,7 +49,7 @@ type InfluUser = UserCommon & {
   promoUrl: string;
 };
 
-type UserState = BizUser | MediaUser | InfluUser;
+export type UserState = BizUser | MediaUser | InfluUser;
 
 type UserStore = {
   user: User | null;
