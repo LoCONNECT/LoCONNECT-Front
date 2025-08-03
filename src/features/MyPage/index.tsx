@@ -1,43 +1,49 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUserStore } from "@/store/useUserStore";
 import Sidebar from "./Sidebar";
 import { Container, MainSection } from "./styled";
-import { UserType, MyPageMenu } from "./types";
 import InfoForm from "./Content/InfoForm";
 import StoreList from "./Content/StoreList";
 import PaymentList from "./Content/PaymentList";
-import SettlementList from "./Content/SettlementList";
+import SettlementList from "./Content/SettlementHistory";
 import RequestList from "./Content/RequestList";
 import ProposalList from "./Content/ProposalList";
 import Withdraw from "./Content/Withdraw";
-
-const DEFAULT_USER_TYPE: UserType = "소상공인"; // 임시 하드코딩
-const DEFAULT_PROFILE = {
-  name: "홍길동",
-  email: "gildong@gmail.com",
-  imgUrl: undefined,
-};
+import { MyPageMenu } from "./types";
+import { typeMapping } from "@/utill/mypage/mapping";
 const DEFAULT_MENU: MyPageMenu = "회원정보";
 
 const MyPage = () => {
-  const [userType] = useState<UserType>(DEFAULT_USER_TYPE);
+  const { user, userState, loadUserProfile } = useUserStore();
   const [selectedMenu, setSelectedMenu] = useState<MyPageMenu>(DEFAULT_MENU);
+
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  useEffect(() => {
+    console.log("userState:", userState);
+  }, [userState]);
+  if (!user) return <div>로그인이 필요합니다.</div>;
 
   const renderContent = () => {
     switch (selectedMenu) {
       case "회원정보":
-        return <InfoForm userType={userType} />;
+        return userState ? (
+          <InfoForm userType={user.role} userData={userState} />
+        ) : null;
       case "가게 관리":
-        return <StoreList userType={userType} />;
+        return <StoreList userType={user.role} />;
       case "결제 내역":
-        return <PaymentList userType={userType} />;
+        return <PaymentList userType={user.role} />;
       case "정산 내역":
-        return <SettlementList userType={userType} />;
+        return <SettlementList userType={user.role} />;
       case "신청 관리":
-        return <RequestList userType={userType} />;
+        return <RequestList userType={user.role} />;
       case "홍보 제안 관리":
-        return <ProposalList userType={userType} />;
+        return <ProposalList userType={user.role} />;
       case "회원탈퇴":
-        return <Withdraw userType={userType} />;
+        return <Withdraw userType={user.role} />;
       default:
         return null;
     }
@@ -46,10 +52,14 @@ const MyPage = () => {
   return (
     <Container>
       <Sidebar
-        userType={userType}
+        userType={typeMapping(userState?.type ?? "biz")}
         selectedMenu={selectedMenu}
         onMenuSelect={setSelectedMenu}
-        profile={DEFAULT_PROFILE}
+        profile={{
+          name: user.name,
+          email: userState?.email ?? "", // ✅ userState에서 이메일 보완
+          imgUrl: undefined, // 필요시 userState?.imgUrl 추가 가능
+        }}
       />
       <MainSection>{renderContent()}</MainSection>
     </Container>

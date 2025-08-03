@@ -8,32 +8,36 @@ export const FooterStyled = styled.div`
     align-items: center;
     justify-content: center;
     .footer_box {
+      margin: 0 10px;
       display: flex;
+      align-items: center;
+      .footer_div {
+        background-color: ${({ theme }) => theme.colors.gray3Color};
+        width: 1px;
+        height: 60px;
+        margin: 0 30px;
+      }
       .footer_left {
         max-width: 619px;
         width: 100%;
         min-height: 64px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        @media (max-width: 744px) {
+          max-width: 348px;
+          min-height: 86px;
+        }
         .footer_company {
           font-size: 20px;
           font-weight: bold;
+          margin-bottom: 18px;
         }
         .footer_menu_box {
-          display: flex;
-          align-items: center;
           font-size: 10px;
           .footer_menu {
             text-decoration: underline;
             text-underline-position: under;
           }
           .footer_stick {
-            background-color: black;
-            width: 1.5px;
-            height: 15px;
-            display: inline-block;
-            margin: 0px 5px;
+            margin: 0px 3px;
           }
         }
       }

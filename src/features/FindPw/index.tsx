@@ -21,11 +21,11 @@ const FindPw = () => {
   // 이메일 인증번호 전송
   const formik = useFormik({
     initialValues: {
-      id: "",
+      loginId: "",
       email: "",
     },
     validationSchema: Yup.object({
-      id: Yup.string()
+      loginId: Yup.string()
         .required("아이디를 입력해주세요.")
         .test("is-valid-id", (value, ctx) => {
           const error = validateId(value ?? "");
@@ -38,15 +38,14 @@ const FindPw = () => {
     }),
     onSubmit: async (values) => {
       try {
-        // TODO: 아이디, 이메일({id: '아이디', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 임시 비밀번호 발송 요청
-        await axiosInstance.post("/auth/send-password", values);
+        // 아이디, 이메일({loginId: '아이디', email: '이메일'}) 보내주면 회원정보 확인하여 있으면 해당 이메일로 임시 비밀번호 발송 요청
+        const res = await axiosInstance.post("/auth/send-password", values);
 
-        message.info("임시 비밀번호가 이메일로 발송되었습니다.");
-
+        message.info(res.data.message);
         router.push("/login"); // 로그인 페이지로 이동
       } catch (e) {
-        // TODO: NotFoundException 회원정보가 없다는 거 던져주기
-        if (isAxiosError(e) && e.response?.status === 404) {
+        // 회원정보가 없음
+        if (isAxiosError(e) && e.response?.status === 500) {
           setMessages("입력하신 정보와 일치하는 회원이 없습니다.");
         } else {
           setMessages("임시 비밀번호 요청 중 오류가 발생했습니다.");
@@ -63,17 +62,17 @@ const FindPw = () => {
           아이디
         </label>
         <input
-          id="id"
+          id="loginId"
           type="text"
-          name="id"
+          name="loginId"
           className="findpw_input"
           placeholder="아이디를 입력하세요"
-          value={formik.values.id}
+          value={formik.values.loginId}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.id && formik.errors.id && (
-          <p className="findpw_error">{formik.errors.id}</p>
+        {formik.touched.loginId && formik.errors.loginId && (
+          <p className="findpw_error">{formik.errors.loginId}</p>
         )}
 
         <label className="findpw_label" htmlFor="email">

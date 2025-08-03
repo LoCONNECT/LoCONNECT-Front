@@ -10,17 +10,17 @@ const Footer = () => {
         <div className="footer_left">
           <div className="footer_company">LoConnect(주)</div>
           <div className="footer_menu_box">
-            <div className="footer_menu">문의하기</div>
-            <div className="footer_stick"></div>
-            <div className="footer_menu">서비스 이용약관</div>
-            <div className="footer_stick"></div>
-            <div>사업자등록번호:110-81-XXXXX</div>
-            <div className="footer_stick"></div>
-            <div>대표:대표자이름</div>
-            <div className="footer_stick"></div>
-            <div>고객센터</div>
-            <div className="footer_stick"></div>
-            <div> 사업자정보확인</div>
+            <span className="footer_menu">문의하기</span>
+            <span className="footer_stick">|</span>
+            <span className="footer_menu">서비스 이용약관</span>
+            <span className="footer_stick">|</span>
+            <span>사업자등록번호:110-81-XXXXX</span>
+            <span className="footer_stick">|</span>
+            <span>대표:대표자이름</span>
+            <span className="footer_stick">|</span>
+            <span>고객센터</span>
+            <span className="footer_stick">|</span>
+            <span>사업자정보확인</span>
           </div>
         </div>
         <div className="footer_div"></div>
