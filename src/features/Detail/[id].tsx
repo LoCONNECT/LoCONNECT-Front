@@ -8,7 +8,6 @@ import { useUserStore } from "@/store/useUserStore";
 import Image from "next/image";
 import { notification } from "antd";
 import axiosInstance from "@/lib/axios";
-import MediaDetail from "./MediaDetail";
 import RestaurantDetail from "./RestaurantDetail";
 
 const Detail = () => {
@@ -106,8 +105,6 @@ const Detail = () => {
     }
   };
 
-  console.log("dd", restaurantItem);
-
   return (
     <DetailStyled className="Detail_wrap">
       <div className="Detail_head">
@@ -127,6 +124,24 @@ const Detail = () => {
             fill
             style={{ objectFit: "cover", borderRadius: 20 }}
           />
+          {type === "media" && (
+            <div className="MainCard_type">
+              <div className="MainCard_icon">
+                <Image
+                  src={`/icon/${mediaItem?.type}Icon.png`}
+                  alt={`${mediaItem?.type} image`}
+                  fill
+                />
+              </div>
+              <p>
+                {mediaItem?.type === "youtube"
+                  ? "유튜브"
+                  : mediaItem?.type === "insta"
+                  ? "인스타그램"
+                  : "네이버 블로그"}
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="Detail_content">
@@ -153,6 +168,7 @@ const Detail = () => {
               </span>
             </p>
 
+            {/* TODO : 홍보매체의 경우 더미데이터 링크 추가 (링크가 빈문자열인 경우 안 띄우기) */}
             <div className="Detail_description">
               <p className="Detail_label">
                 {type === "media" ? "프로그램 설명: " : "소개글: "}
@@ -186,11 +202,8 @@ const Detail = () => {
         </button>
       </div>
 
-      {type === "media" ? (
-        <MediaDetail />
-      ) : (
-        <RestaurantDetail item={restaurantItem} />
-      )}
+      {/* TODO : MediaDetail 컴포넌트 안 쓰면 지우기 */}
+      {type !== "media" && <RestaurantDetail item={restaurantItem} />}
     </DetailStyled>
   );
 };

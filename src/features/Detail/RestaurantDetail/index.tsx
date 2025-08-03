@@ -10,6 +10,7 @@ const RestaurantDetail = ({ item }: { item: RestaurantType | null }) => {
     <RestaurantDetailStyle className="RestaurantDetail_wrap">
       <div className="RestaurantDetail_line" />
 
+      {/* TODO : 반응형 */}
       <div className="RestaurantDetail_infos">
         <div className="RestaurantDetail_menu">
           <p> 메뉴판 </p>

@@ -12,6 +12,10 @@ export const RestaurantDetailStyle = styled.div`
       width: 100%;
       height: 1px;
       background-color: ${({ theme }) => theme.colors.gray2Color};
+
+      @media (max-width: 375px) {
+        height: 0;
+      }
     }
 
     .RestaurantDetail_infos {

@@ -34,6 +34,27 @@ export const DetailStyled = styled.div`
         position: relative;
         width: 335px;
         height: 280px;
+
+        .MainCard_type {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          height: 32px;
+          gap: 4px;
+          padding: 4px 8px;
+          border-radius: 8px;
+          background-color: rgba(255, 255, 255, 0.61);
+          bottom: 10px;
+          left: 10px;
+          font-weight: 500;
+          font-size: 13px;
+        }
+
+        .MainCard_icon {
+          position: relative;
+          width: 16px;
+          height: 16px;
+        }
       }
 
       .Detail_content {
