@@ -8,6 +8,8 @@ import { useUserStore } from "@/store/useUserStore";
 import Image from "next/image";
 import { notification } from "antd";
 import axiosInstance from "@/lib/axios";
+import MediaDetail from "./MediaDetail";
+import RestaurantDetail from "./RestaurantDetail";
 
 const Detail = () => {
   const router = useRouter();
@@ -104,6 +106,8 @@ const Detail = () => {
     }
   };
 
+  console.log("dd", restaurantItem);
+
   return (
     <DetailStyled className="Detail_wrap">
       <div className="Detail_head">
@@ -181,6 +185,12 @@ const Detail = () => {
           {hasApplied ? "신청 완료" : "신청하기"}
         </button>
       </div>
+
+      {type === "media" ? (
+        <MediaDetail />
+      ) : (
+        <RestaurantDetail item={restaurantItem} />
+      )}
     </DetailStyled>
   );
 };

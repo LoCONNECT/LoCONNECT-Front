@@ -36,9 +36,6 @@ const MainPage = () => {
     } else {
       setType(adminType);
     }
-
-    console.log("adminType", adminType);
-    console.log("type : ", type);
   }, [getType]);
 
   const [menu, setMenu] = useState<"all" | "youtube" | "insta" | "blog">("all");
@@ -214,8 +211,6 @@ const MainPage = () => {
   const filteredMedia = useMemo(() => {
     return menu === "all" ? media : media.filter((m) => m.type === menu);
   }, [media, menu]);
-
-  console.log("filteredMedia", filteredMedia);
 
   // 식당 지역 선택
   const selectedOptionLabel = selectedOption

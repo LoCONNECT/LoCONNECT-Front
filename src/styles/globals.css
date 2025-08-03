@@ -196,6 +196,23 @@ input::placeholder {
   box-shadow: none !important;
 }
 
+.ant-image.custom-ant-image .ant-image-img,
+.ant-image.custom-ant-image .ant-image-mask {
+  border-radius: 20px !important;
+}
+
+.custom-ant-image {
+  width: 200px;
+  height: 160px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.ant-image.custom-ant-scrapImg .ant-image-img,
+.ant-image.custom-ant-scrapImg .ant-image-mask {
+  border-radius: 20px 20px 0 0 !important;
+}
+
 /* modal 이미지 */
 .modal_img {
   position: relative;
