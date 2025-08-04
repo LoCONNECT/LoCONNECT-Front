@@ -21,17 +21,13 @@ const MyPage = () => {
     loadUserProfile();
   }, []);
 
-  useEffect(() => {
-    console.log("userState:", userState);
-  }, [userState]);
   if (!user) return <div>로그인이 필요합니다.</div>;
 
   const renderContent = () => {
     switch (selectedMenu) {
       case "회원정보":
-        return userState ? (
-          <InfoForm userType={user.role} userData={userState} />
-        ) : null;
+        return <InfoForm userType={user.role} userData={userState} />;
+
       case "가게 관리":
         return <StoreList userType={user.role} />;
       case "결제 내역":
