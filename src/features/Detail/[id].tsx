@@ -67,8 +67,8 @@ const Detail = () => {
       if (!id || !type || !user) return;
 
       try {
-        const res = await axiosInstance.get(`/main/${type}/${id}/applied`);
-        setHasApplied(res.data.applied);
+        const res = await axiosInstance.get(`/main/applied/${type}/${id}`);
+        setHasApplied(res.data.result);
       } catch (e) {
         console.error("신청 여부 확인 실패", e);
       }
