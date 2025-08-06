@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 // 정산 내역
 export const DateBox = styled.div`
+  cursor: pointer;
   width: 100%;
   height: 105px;
   padding: 20px;
@@ -66,37 +67,40 @@ export const DataGroupStyled = styled.div`
   }
 `;
 // 정산 내역 카드
-export const PaymentCardStyled = styled.div`
+export const SettleCardStyled = styled.div`
   width: 100%;
   height: 167px;
   border-radius: 32px;
   border: 1px solid ${({ theme }) => theme.colors.gray2Color};
   padding: 20px;
-  .payment-status {
+  .settle-status {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 10px;
   }
-  .payment-card {
+
+  .settle-card {
     display: flex;
     width: 100%;
     height: 84px;
-    .payment-img {
+    .settle-img {
       object-fit: cover;
       margin-right: 15px;
       border-radius: 20px;
     }
 
-    .payment-content {
+    .settle-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      .payment-price {
+      .settle-price {
         font-size: 18px;
         font-weight: 600;
+      }
+      .status-completed {
         color: ${({ theme }) => theme.colors.mainColor};
       }
-      .payment-title {
+      .settle-title {
         height: 48px;
         font-size: 14px;
         color: ${({ theme }) => theme.colors.gray5Color};
