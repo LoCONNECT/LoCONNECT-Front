@@ -5,7 +5,7 @@ import { Container, MainSection } from "./styled";
 import InfoForm from "./Content/InfoForm";
 import StoreList from "./Content/StoreList";
 import PaymentList from "./Content/PaymentList";
-import SettlementList from "./Content/SettlementHistory";
+import SettlementList from "./Content/SettlementList";
 import RequestList from "./Content/RequestList";
 import ProposalList from "./Content/ProposalList";
 import Withdraw from "./Content/Withdraw";
