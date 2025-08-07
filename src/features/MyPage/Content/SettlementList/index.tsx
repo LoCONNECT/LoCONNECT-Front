@@ -82,7 +82,7 @@ const SettlementList = ({ userType }: SettlementListProps) => {
       console.log("월", month);
 
       // TODO: 연도랑 월을 보내면 그에 해당하는 정산내역 보내주기(더미데이터에 적혀있는거)
-      const response = await axiosInstance.get("/settlements/history", {
+      const response = await axiosInstance.get("/mypage/settlement", {
         params: { year, month },
       });
       const fetchedData = response.data;
