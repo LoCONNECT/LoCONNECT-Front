@@ -8,8 +8,8 @@ import {
 import { UserState } from "@/store/useUserStore"; // 타입 불러오기
 
 interface InfoFormProps {
-  userType: string;
-  userData: UserState | null;
+  userType?: string;
+  userData?: UserState | null;
 }
 
 const InfoForm = ({ userType, userData }: InfoFormProps) => {
@@ -78,18 +78,6 @@ const InfoForm = ({ userType, userData }: InfoFormProps) => {
           </InputWithButton>
         </label>
       </FormSection>
-
-      <ToggleRow>
-        <div>로그인 차단 설정</div>
-        <div>
-          <span>로그인 차단</span>
-          <input
-            type="checkbox"
-            checked={false /* userData?.blockLogin ?? false */}
-            readOnly
-          />
-        </div>
-      </ToggleRow>
     </div>
   );
 };
