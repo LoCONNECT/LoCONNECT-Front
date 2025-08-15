@@ -36,9 +36,6 @@ const MainPage = () => {
     } else {
       setType(adminType);
     }
-
-    console.log("adminType", adminType);
-    console.log("type : ", type);
   }, [getType]);
 
   const [menu, setMenu] = useState<"all" | "youtube" | "insta" | "blog">("all");
@@ -154,6 +151,7 @@ const MainPage = () => {
             subTitle: "충북의 맛을 찾아서",
             channelPR:
               "소상공인과 함께 성장하는 채널, 구독하고 다양한 맛집 소식을 받아보세요!",
+            chaennlLink: "https://youtue.com",
           },
           {
             id: 2,
@@ -169,6 +167,7 @@ const MainPage = () => {
               "충주 곳곳의 떡볶이 맛집을 소개하며 지역 맛을 널리 알립니다.",
             subTitle: "충주의 매운맛을 찾아서",
             channelPR: "충주의 다양한 맛집 소식을 실시간으로 전합니다.",
+            chaennlLink: "https://instagram.com",
           },
           {
             id: 3,
@@ -185,6 +184,7 @@ const MainPage = () => {
             subTitle: "청주 고기의 진짜 맛",
             channelPR:
               "지역 소상공인을 응원하며 청주 맛집을 알리는 블로그입니다.",
+            channelLink: "",
           },
         ];
 
@@ -214,8 +214,6 @@ const MainPage = () => {
   const filteredMedia = useMemo(() => {
     return menu === "all" ? media : media.filter((m) => m.type === menu);
   }, [media, menu]);
-
-  console.log("filteredMedia", filteredMedia);
 
   // 식당 지역 선택
   const selectedOptionLabel = selectedOption

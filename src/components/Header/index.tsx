@@ -38,7 +38,7 @@ const Header = () => {
         }
       }
     };
-    // initUser();
+    initUser();
   }, [user]);
 
   // 로그아웃 클릭시

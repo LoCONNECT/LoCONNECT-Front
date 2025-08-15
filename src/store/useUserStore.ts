@@ -71,16 +71,17 @@ export const useUserStore = create<UserStore>((set) => ({
   logout: () => set({ user: null }),
   loadUserProfile: async () => {
     try {
-      const res = await axiosInstance.get<User>("/users/profile");
-      console.log("현재 로그인한 사용자", res.data);
-      set({ user: res.data });
-    } catch (e: any) {
-      // 401에러(로그인 안 된 상태)
-      if (e?.response?.status === 401) {
-        set({ user: null });
-      } else {
-        console.error(e);
-      }
+      const res = await axiosInstance.get<UserState>("/users/profile");
+      set({
+        user: {
+          id: res.data.id,
+          name: res.data.name,
+          role: res.data.role,
+        },
+        userState: res.data,
+      });
+    } catch (e) {
+      set({ user: null, userState: null });
     }
   },
 }));

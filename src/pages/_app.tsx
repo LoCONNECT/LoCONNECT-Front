@@ -13,6 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const loadUserProfile = useUserStore((state) => state.loadUserProfile);
   const router = useRouter();
 
+  // mypage인지 확인하는 변수
+  const isMyPage = router.pathname === "/mypage";
+
   // 새로고침 시 토큰 기반으로 유저 정보 갱신
   useEffect(() => {
     if (
@@ -35,11 +38,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/icon/MobileLogo.svg" />
       </Head>
       <ThemeProvider theme={theme}>
-        <Header />
-        <main>
-          <Component {...pageProps} />
-        </main>
-        {/* <Footer /> */}
+        <div className="app_container">
+          <Header />
+          <main>
+            <Component {...pageProps} />
+          </main>
+          {!isMyPage && <Footer />}
+        </div>
       </ThemeProvider>
     </>
   );

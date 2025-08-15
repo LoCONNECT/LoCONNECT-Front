@@ -1,9 +1,9 @@
-import PaymentCard from "./PaymentCard";
+import SettleCard from "./SettleCard";
 import { DataGroupStyled } from "./styled";
 
-interface Payment {
+interface Settle {
   id: number;
-  paymentStatus: string;
+  settleStatus: string;
   price: number;
   thumbnail: string;
   desc: string;
@@ -13,11 +13,11 @@ interface Payment {
 interface Props {
   date: string;
   totalAmount: number;
-  payments: Payment[];
+  settles: Settle[];
 }
 
 // 정산 내역 카드 리스트
-const DataGroup = ({ date, totalAmount, payments }: Props) => {
+const DataGroup = ({ date, totalAmount, settles }: Props) => {
   return (
     <DataGroupStyled>
       <div className="data-box">
@@ -25,8 +25,8 @@ const DataGroup = ({ date, totalAmount, payments }: Props) => {
         <div className="data-totalprice">{totalAmount.toLocaleString()}원</div>
       </div>
       <div className="data-group">
-        {payments.map((p) => (
-          <PaymentCard key={p.id} payment={p} />
+        {settles.map((p) => (
+          <SettleCard key={p.id} settle={p} />
         ))}
       </div>
     </DataGroupStyled>
