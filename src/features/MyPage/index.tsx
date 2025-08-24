@@ -21,25 +21,31 @@ const MyPage = () => {
     loadUserProfile();
   }, []);
 
-  if (!user) return <div>로그인이 필요합니다.</div>;
+  useEffect(() => {
+    console.log("userState:", userState);
+  }, [userState]);
+  // if (!user) return <div>로그인이 필요합니다.</div>;
 
   const renderContent = () => {
     switch (selectedMenu) {
       case "회원정보":
-        return <InfoForm userType={user.role} userData={userState} />;
-
+        return userState ? (
+          <InfoForm userType={user?.role} userData={userState} />
+        ) : (
+          <InfoForm userType={"방송매체"} userData={userState} />
+        );
       case "가게 관리":
-        return <StoreList userType={user.role} />;
+        return <StoreList userType={user?.role} />;
       case "결제 내역":
-        return <PaymentList userType={user.role} />;
+        return <PaymentList userType={user?.role} />;
       case "정산 내역":
-        return <SettlementList userType={user.role} />;
+        return <SettlementList userType={user?.role} />;
       case "신청 관리":
-        return <RequestList userType={user.role} />;
+        return <RequestList userType={user?.role} />;
       case "홍보 제안 관리":
-        return <ProposalList userType={user.role} />;
+        return <ProposalList userType={user?.role} />;
       case "회원탈퇴":
-        return <Withdraw userType={user.role} />;
+        return <Withdraw userType={user?.role} />;
       default:
         return null;
     }
@@ -52,7 +58,7 @@ const MyPage = () => {
         selectedMenu={selectedMenu}
         onMenuSelect={setSelectedMenu}
         profile={{
-          name: user.name,
+          name: user?.name,
           email: userState?.email ?? "", // ✅ userState에서 이메일 보완
           imgUrl: undefined, // 필요시 userState?.imgUrl 추가 가능
         }}

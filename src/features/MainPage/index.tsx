@@ -7,6 +7,7 @@ import axios from "axios";
 import MainCard from "@/components/MainCard";
 import { useMainStore } from "@/store/mainCardStore";
 import { useUserStore } from "@/store/useUserStore";
+import IntroForm from "@/components/IntroForm";
 
 const MainPage = () => {
   const router = useRouter();
@@ -50,6 +51,8 @@ const MainPage = () => {
   const [searchedRestaurant, setSearchedRestaurant] = useState<
     RestaurantType[]
   >([]);
+
+  const [isIntroFormOpen, setIsIntroFormOpen] = useState(false);
 
   useEffect(() => {
     // 데이터 요청
@@ -249,6 +252,11 @@ const MainPage = () => {
 
   console.log("searchedRestaurant", searchedRestaurant);
 
+  const handleIntroFormSuccess = () => {
+    // 폼 제출 성공 후 데이터 새로고침 또는 다른 작업 수행
+    console.log("소개글 등록 완료");
+  };
+
   return (
     <MainStyle className="Main_wrap">
       <div className="Main_header">
@@ -262,6 +270,15 @@ const MainPage = () => {
         />
         {/* 검색창 */}
         <MainHeadRight setSearch={setSearch} />
+        
+        {/* 로그인된 사용자만 신청하기 버튼 표시 */}
+        {user && (
+          <div className="Main_applyBtn">
+            <button onClick={() => setIsIntroFormOpen(true)}>
+              내 소개글 등록
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="Main_body">
@@ -272,6 +289,13 @@ const MainPage = () => {
           restaurant={searchedRestaurant}
         />
       </div>
+
+      <IntroForm
+        isOpen={isIntroFormOpen}
+        onClose={() => setIsIntroFormOpen(false)}
+        onSuccess={handleIntroFormSuccess}
+        userRole={user?.role}
+      />
     </MainStyle>
   );
 };
