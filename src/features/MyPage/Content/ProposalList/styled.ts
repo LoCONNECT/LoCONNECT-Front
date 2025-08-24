@@ -37,6 +37,7 @@ export const ProposalCardStyled = styled.div`
       .proposal-button {
         display: flex;
         justify-content: flex-end;
+
         .proposal-btn {
           width: 163.5px;
           height: 44px;
@@ -57,4 +58,14 @@ export const ProposalCardStyled = styled.div`
       }
     }
   }
+`;
+
+export const StatusButton = styled.button`
+  width: 163.5px;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #f2f2f2;
+  color: #a0a0a0;
 `;
